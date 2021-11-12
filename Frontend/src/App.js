@@ -19,7 +19,7 @@ import GRNcart from "./Component/GRNcart";
 import Innvoice from "./Component/Innvoice";
 import User from "./Component/User";
 import Supplier from "./Component/Supplier";
-import Product_Variation from "./Component/Product_Varation";
+import ProductVariation from "./Component/Product_Varation";
 
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
           <ProductList />
         </Route>
         <Route path="/productVariation">
-          <Product_Variation />
+          <ProductVariation />
         </Route>
         <Route path="/category">
           <Category />

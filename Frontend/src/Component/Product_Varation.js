@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import Main from "./Main";
 
-export default class Product_Variation extends Component {
+export default class ProductVariation extends Component {
   constructor(props) {
     super(props);
 
