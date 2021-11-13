@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import axios from "axios";
 import Main from "./Main";
 
-export default class PayemntMethod extends Component {
+export default class PaymentMethod extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       method: [],
-      paym_id:	 "",
+      paym_id: "",
       paym_name: "",
       paym_type: "",
     };
@@ -43,7 +43,7 @@ export default class PayemntMethod extends Component {
     e.preventDefault();
     axios
       .patch("http://localhost:4000/api/payMethod", this.state)
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         this.componentDidMount();
       });
@@ -67,17 +67,19 @@ export default class PayemntMethod extends Component {
   };
 
   findMethodById = (paym_id) => {
-    axios.get("http://localhost:4000/api/payMethod/" + paym_id).then((response) => {
-      if (response.data != null) {
-        let data = response.data.data;
-        console.log(data.paym_id);
-        this.setState({
-          paym_id: data.paym_id,
-          paym_name: data.paym_name,
-          paym_type: data.paym_type,
-        });
-      }
-    });
+    axios
+      .get("http://localhost:4000/api/payMethod/" + paym_id)
+      .then((response) => {
+        if (response.data != null) {
+          let data = response.data.data;
+          console.log(data.paym_id);
+          this.setState({
+            paym_id: data.paym_id,
+            paym_name: data.paym_name,
+            paym_type: data.paym_type,
+          });
+        }
+      });
   };
 
   render() {
@@ -166,7 +168,7 @@ export default class PayemntMethod extends Component {
                                                     htmlFor="formrow-method-input"
                                                     className="form-label"
                                                   >
-                                                      Payment Method Type
+                                                    Payment Method Type
                                                   </label>
                                                   <select
                                                     id="formrow-inputLocation"
@@ -249,8 +251,12 @@ export default class PayemntMethod extends Component {
                                   />
                                 </div>
                               </th>
-                              <th className="align-middle">Payment Method Name</th>
-                              <th className="align-middle">Payment Method Type</th>
+                              <th className="align-middle">
+                                Payment Method Name
+                              </th>
+                              <th className="align-middle">
+                                Payment Method Type
+                              </th>
 
                               <th></th>
                             </tr>
@@ -426,7 +432,6 @@ export default class PayemntMethod extends Component {
             {/* /.modal-dialog */}
           </div>
         </div>
-        
       </body>
     );
   }

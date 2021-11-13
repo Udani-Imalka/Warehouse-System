@@ -1,8 +1,96 @@
 import React, { Component } from "react";
+import axios from "axios";
 import Main from "./Main";
 
 export default class PaymentList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      payment: [],
+      pay_id: "",
+      pay_paym_id: "",
+      pay_paidAmount: "",
+      pay_totInvoiceAmount: "",
+      pay_balance: "",
+      paytype_id: "",
+    };
+  }
+
+  componentDidMount() {
+    axios.get("http://localhost:4000/api/payment").then((response) => {
+      this.setState({
+        payment: response.data.data,
+      });
+      console.log(response.data.data);
+    });
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:4000/api/payment", this.state)
+      .then((response) => {
+        console.log(response.data);
+        this.componentDidMount();
+      });
+  };
+
+  handleUpdate = (e) => {
+    e.preventDefault();
+    axios
+      .patch("http://localhost:4000/api/payment", this.state)
+      .then((response) => {
+        console.log(response.data);
+        this.componentDidMount();
+      });
+  };
+
+  deletePayment = (pay_id) => {
+    axios
+      .delete("http://localhost:4000/api/payment/" + pay_id)
+      .then((response) => {
+        if (response.data != null) {
+          alert("Payment item deleted succesfully.");
+
+          this.setState({
+            payment: this.state.payment.filter(
+              (data) => data.pay_id !== pay_id
+            ),
+          });
+        }
+        console.log(response);
+      });
+  };
+
+  findPaymentById = (pay_id) => {
+    axios
+      .get("http://localhost:4000/api/payment/" + pay_id)
+      .then((response) => {
+        if (response.data != null) {
+          let data = response.data.data;
+          console.log(data.pay_id);
+          this.setState({
+            pay_id: data.pay_id,
+            pay_paym_id: data.pay_paym_id,
+            pay_paidAmount: data.pay_paidAmount,
+            pay_totInvoiceAmount: data.pay_totInvoiceAmount,
+            pay_balance: data.pay_balance,
+            paytype_id: data.paytype_id,
+          });
+        }
+      });
+  };
+
   render() {
+    const { pay_paidAmount,	pay_totInvoiceAmount} = this.state;
+
     return (
       <body data-sidebar="dark">
         <Main />
@@ -15,10 +103,7 @@ export default class PaymentList extends Component {
                   <div className="card">
                     <div className="card-body">
                       <h4 className="card-title mb-4">Payment List</h4>
-                      {/* <div class="page-title-box d-sm-flex align-items-center justify-content-between"> */}
-                      {/* <div class="page-title-right">
-                <a href="/#" class="btn btn-primary waves-effect waves-light">Add Product</a>
-                </div> */}
+
                       <div className="row">
                         <div className="col-xl-10">
                           <button
@@ -27,7 +112,7 @@ export default class PaymentList extends Component {
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModalFullscreen"
                           >
-                            + Add Payment
+                            + Payment 
                           </button>
                         </div>
                         <div class="col-xl-2">
@@ -43,9 +128,8 @@ export default class PaymentList extends Component {
                             </label>
                           </div>
                         </div>
+
                         <div>
-                          {/* <button type="button" className="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#exampleModalFullscreen">+ Add Unit</button> */}
-                          {/* sample modal content */}
                           <div
                             id="exampleModalFullscreen"
                             className="modal fade"
@@ -55,121 +139,56 @@ export default class PaymentList extends Component {
                           >
                             <div className="modal-dialog ">
                               <div className="modal-content">
-                                {/* <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalFullscreenLabel">Fullscreen Modal Heading</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-              </div> */}
                                 <div className="modal-body">
                                   <div className="row">
                                     <div className="col-xl-12">
                                       <div className="card">
                                         <div className="card-body">
                                           <h4 className="card-title mb-6">
-                                            Add Payment
+                                            Add Payment 
                                           </h4>
-                                          <form>
-                                            <div className="col-md-8">
-                                              <div className="mb-6">
-                                                <label
-                                                  htmlFor="formrow-email-input"
-                                                  className="form-label"
-                                                >
-                                                  Payment Name
-                                                </label>
-                                                <input
-                                                  type="email"
-                                                  className="form-control"
-                                                  id="formrow-email-input"
-                                                />
-                                              </div>
-                                            </div>
-                                            <div className="col-md-8">
-                                              <div className="mb-6">
-                                                <label
-                                                  htmlFor="formrow-email-input"
-                                                  className="form-label"
-                                                >
-                                                  Balance
-                                                </label>
-                                                <input
-                                                  type="email"
-                                                  className="form-control"
-                                                  id="formrow-email-input"
-                                                />
-                                              </div>
-                                            </div>
+                                          <form onSubmit={this.handleSubmit}>
                                             <div className="row">
                                               <div className="col-md-6">
-                                                <div className="mb-3">
+                                                <div className="mb-6">
                                                   <label
-                                                    htmlFor="formrow-firstname-input"
+                                                    htmlFor="formrow-name-input"
                                                     className="form-label"
                                                   >
-                                                    Payment Id
+                                                    PaidAmount
                                                   </label>
-                                                  <select
-                                                    id="formrow-inputProductId"
-                                                    className="form-select"
-                                                  >
-                                                    <option selected>
-                                                      Choose
-                                                    </option>
-                                                  </select>
+                                                  <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="formrow-name-input"
+                                                    name="pay_paidAmount"
+                                                    value={pay_paidAmount}
+                                                    onChange={this.handleChange}
+                                                  />
                                                 </div>
                                               </div>
+
                                               <div className="col-md-6">
                                                 <div className="mb-3">
                                                   <label
-                                                    htmlFor="formrow-firstname-input"
+                                                    htmlFor="formrow-method-input"
                                                     className="form-label"
                                                   >
-                                                    PayType Id
+                                                    TotInvoiceAmount
                                                   </label>
                                                   <select
-                                                    id="formrow-inputProductId"
+                                                    id="formrow-inputLocation"
                                                     className="form-select"
+                                                    name="pay_totInvoiceAmount"
+                                                    value={pay_totInvoiceAmount}
+                                                    onChange={this.handleChange}
                                                   >
                                                     <option selected>
                                                       Choose
                                                     </option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="row">
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-firstname-input"
-                                                    className="form-label"
-                                                  >
-                                                    grnIn Id
-                                                  </label>
-                                                  <select
-                                                    id="formrow-inputProductId"
-                                                    className="form-select"
-                                                  >
-                                                    <option selected>
-                                                      Choose
-                                                    </option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-firstname-input"
-                                                    className="form-label"
-                                                  >
-                                                    User Id
-                                                  </label>
-                                                  <select
-                                                    id="formrow-inputProductId"
-                                                    className="form-select"
-                                                  >
-                                                    <option selected>
-                                                      Choose
-                                                    </option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
                                                   </select>
                                                 </div>
                                               </div>
@@ -194,6 +213,7 @@ export default class PaymentList extends Component {
                                               <button
                                                 type="submit"
                                                 class="btn btn-primary waves-effect waves-light"
+                                                value="submit"
                                               >
                                                 Submit
                                               </button>
@@ -202,7 +222,7 @@ export default class PaymentList extends Component {
                                                 class="btn btn-secondary waves-effect"
                                                 data-bs-dismiss="modal"
                                               >
-                                                Cancel
+                                                Close
                                               </button>
                                             </div>
                                           </form>
@@ -213,10 +233,6 @@ export default class PaymentList extends Component {
                                     </div>
                                   </div>
                                 </div>
-                                {/* <div className="modal-footer">
-                <button type="button" className="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary waves-effect waves-light">Save changes</button>
-              </div> */}
                               </div>
                               {/* /.modal-content */}
                             </div>
@@ -241,224 +257,63 @@ export default class PaymentList extends Component {
                                   />
                                 </div>
                               </th>
-                              <th className="align-middle">payId</th>
-                              <th className="align-middle">Payment Name</th>
-                              <th className="align-middle">payType Id</th>
-                              <th className="align-middle">grnInId</th>
-                              <th className="align-middle">User Id</th>
-                              <th className="align-middle">Balance</th>
+                              <th className="align-middle">
+                              PaidAmount,	
+                              </th>
+                              <th className="align-middle">
+                              TotInvoiceAmount
+                              </th>
+
                               <th></th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck02"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck02"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  pay1
-                                </a>{" "}
-                              </td>
-                              <td>payN1</td>
-                              <td>payT1</td>
-                              <td>grnIn1</td>
-                              <td>U1</td>
-                              <td>Rs.30000.00</td>
+                            {this.state.payment.map((data) => {
+                              return (
+                                <tr key={data.pay_id}>
+                                  <td>
+                                    <div className="form-check font-size-16">
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="transactionCheck02"
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="transactionCheck02"
+                                      />
+                                    </div>
+                                  </td>
+                                  <td>{data.pay_paidAmount}</td>
+                                  <td>{data.pay_totInvoiceAmount}</td>
+                                 
 
-                              <td>
-                                <a
-                                  href="/"
-                                  className="btn btn-outline-secondary btn-sm edit"
-                                >
-                                  <i className="fas fa-pencil-alt" />
-                                </a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck03"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck03"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  pay2
-                                </a>{" "}
-                              </td>
-                              <td>payN2</td>
-                              <td>payT2</td>
-                              <td>grnIn2</td>
-                              <td>U2</td>
-                              <td>Rs.35000.00</td>
-
-                              <td>
-                                <a
-                                  href="/"
-                                  class="btn btn-outline-secondary btn-sm edit"
-                                  title="Edit"
-                                >
-                                  <i class="fas fa-pencil-alt"></i>
-                                </a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck04"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck04"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  pay3
-                                </a>{" "}
-                              </td>
-                              <td>payN3</td>
-                              <td>payT3</td>
-                              <td>grnIn3</td>
-                              <td>U3</td>
-                              <td>Rs.20000.00</td>
-
-                              <td>
-                                <a
-                                  href="/"
-                                  class="btn btn-outline-secondary btn-sm edit"
-                                  title="Edit"
-                                >
-                                  <i class="fas fa-pencil-alt"></i>
-                                </a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck05"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck05"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  pay4
-                                </a>{" "}
-                              </td>
-                              <td>payN4</td>
-                              <td>payT4</td>
-                              <td>grnIn4</td>
-                              <td>U4</td>
-                              <td>Rs.30000.00</td>
-
-                              <td>
-                                <a
-                                  href="/"
-                                  class="btn btn-outline-secondary btn-sm edit"
-                                  title="Edit"
-                                >
-                                  <i class="fas fa-pencil-alt"></i>
-                                </a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck06"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck06"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  pay5
-                                </a>{" "}
-                              </td>
-                              <td>payN5</td>
-                              <td>payT5</td>
-                              <td>grnIn5</td>
-                              <td>U5</td>
-                              <td>Rs.30000.00</td>
-                              <td>
-                                <a
-                                  href="/"
-                                  class="btn btn-outline-secondary btn-sm edit"
-                                  title="Edit"
-                                >
-                                  <i class="fas fa-pencil-alt"></i>
-                                </a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck07"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck07"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  pay6
-                                </a>{" "}
-                              </td>
-                              <td>payN6</td>
-                              <td>payT6</td>
-                              <td>grnIn6</td>
-                              <td>U6</td>
-                              <td>Rs.30000.00</td>
-
-                              <td>
-                                <a
-                                  href="/"
-                                  className="btn btn-outline-secondary btn-sm edit"
-                                  title="Edit"
-                                >
-                                  <i class="fas fa-pencil-alt"></i>
-                                </a>
-                              </td>
-                            </tr>
+                                  <td>
+                                    <button
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#edit"
+                                      class="btn btn-outline-secondary btn-sm edit"
+                                      title="Edit"
+                                      onClick={this.findPaymentById.bind(
+                                        this,
+                                        data.pay_id
+                                      )}
+                                    >
+                                      <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-secondary btn-sm delete"
+                                      onClick={this.deletePayment.bind(
+                                        this,
+                                        data.pay_id
+                                      )}
+                                    >
+                                      <i class="mdi mdi-trash-can d-block " />
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
@@ -471,127 +326,117 @@ export default class PaymentList extends Component {
               {/* container-fluid */}
               {/* End Page-content */}
               {/* Transaction Modal */}
-              <div
-                className="modal fade transaction-detailModal"
-                tabIndex={-1}
-                role="dialog"
-                aria-labelledby="transaction-detailModalLabel"
-                aria-hidden="true"
-              >
-                <div
-                  className="modal-dialog modal-dialog-centered"
-                  role="document"
-                >
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5
-                        className="modal-title"
-                        id="transaction-detailModalLabel"
-                      >
-                        Order Details
-                      </h5>
-                      <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      />
-                    </div>
-                    <div className="modal-body">
-                      <p className="mb-2">
-                        Product id:{" "}
-                        <span className="text-primary">#SK2540</span>
-                      </p>
-                      <p className="mb-4">
-                        Billing Name:{" "}
-                        <span className="text-primary">Neal Matthews</span>
-                      </p>
-                      <div className="table-responsive">
-                        <table className="table align-middle table-nowrap">
-                          <thead>
-                            <tr>
-                              <th scope="col">Product</th>
-                              <th scope="col">Product Name</th>
-                              <th scope="col">Price</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">
-                                <div>
-                                  <img
-                                    src="assets/images/product/img-7.png"
-                                    alt=""
-                                    className="avatar-sm"
+
+              {/* end modal */}
+            </div>
+          </div>
+        </div>
+
+        {/* update modal */}
+        <div>
+          <div
+            id="edit"
+            className="modal fade"
+            tabIndex={-1}
+            aria-labelledby="#exampleModalFullscreenLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog ">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <div className="row">
+                    <div className="col-xl-12">
+                      <div className="card">
+                        <div className="card-body">
+                          <h4 className="card-title mb-6">Update Payment</h4>
+                          <form onSubmit={this.handleUpdate}>
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="mb-6">
+                                  <label
+                                    htmlFor="formrow-name-input"
+                                    className="form-label"
+                                  >
+                                    paidAmount,	
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    id="formrow-name-input"
+                                    name="paym_name"
+                                    value={this.state.pay_paidAmount}
+                                    onChange={this.handleChange}
                                   />
                                 </div>
-                              </th>
-                              <td>
-                                <div>
-                                  <h5 className="text-truncate font-size-14">
-                                    Wireless Headphone (Black)
-                                  </h5>
-                                  <p className="text-muted mb-0">$ 225 x 1</p>
+                              </div>
+
+                              <div className="col-md-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-method-input"
+                                    className="form-label"
+                                  >
+                                    TotInvoiceAmount
+                                  </label>
+                                  <select
+                                    id="formrow-inputLocation"
+                                    className="form-select"
+                                    name=""
+                                    value={this.state.pay_totInvoiceAmount}
+                                    onChange={this.handleChange}
+                                  >
+                                    <option selected>Choose</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                  </select>
                                 </div>
-                              </td>
-                              <td>$ 255</td>
-                            </tr>
-                            <tr>
-                              <th scope="row">
-                                <div>
-                                  <img
-                                    src="assets/images/product/img-4.png"
-                                    alt=""
-                                    className="avatar-sm"
-                                  />
-                                </div>
-                              </th>
-                              <td>
-                                <div>
-                                  <h5 className="text-truncate font-size-14">
-                                    Phone patterned cases
-                                  </h5>
-                                  <p className="text-muted mb-0">$ 145 x 1</p>
-                                </div>
-                              </td>
-                              <td>$ 145</td>
-                            </tr>
-                            <tr>
-                              <td colSpan={2}>
-                                <h6 className="m-0 text-right">Sub Total:</h6>
-                              </td>
-                              <td>$ 400</td>
-                            </tr>
-                            <tr>
-                              <td colSpan={2}>
-                                <h6 className="m-0 text-right">Shipping:</h6>
-                              </td>
-                              <td>Free</td>
-                            </tr>
-                            <tr>
-                              <td colSpan={2}>
-                                <h6 className="m-0 text-right">Total:</h6>
-                              </td>
-                              <td>$ 400</td>
-                            </tr>
-                          </tbody>
-                        </table>
+                              </div>
+                            </div>
+
+                            <div className="mb-3">
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="gridCheck"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="gridCheck"
+                                >
+                                  Check me out
+                                </label>
+                              </div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2">
+                              <button
+                                type="submit"
+                                class="btn btn-primary waves-effect waves-light"
+                                value="submit"
+                              >
+                                Update
+                              </button>
+                              <button
+                                type="reset"
+                                class="btn btn-secondary waves-effect"
+                                data-bs-dismiss="modal"
+                              >
+                                Close
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                        {/* end card body */}
                       </div>
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                      >
-                        Close
-                      </button>
+                      {/* end card */}
                     </div>
                   </div>
                 </div>
               </div>
-              {/* end modal */}
+              {/* /.modal-content */}
             </div>
+            {/* /.modal-dialog */}
           </div>
         </div>
       </body>
