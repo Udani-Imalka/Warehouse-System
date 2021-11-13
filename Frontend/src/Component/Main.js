@@ -789,6 +789,11 @@ export default class Main extends Component {
                       </Link>
                     </li>
                     <li>
+                      <Link key="t-task-list" role="menuitem" to="paymentMethod">
+                        Payment Method
+                      </Link>
+                    </li>
+                    <li>
                       <Link key="t-task-list" role="menuitem" to="cheque">
                         Cheque
                       </Link>

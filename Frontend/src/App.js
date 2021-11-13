@@ -12,13 +12,8 @@ import Expenses from "./Component/Expenses";
 import ExpenseType from "./Component/ExpenseType";
 import PaymentList from "./Component/PaymentList";
 import PaymentType from "./Component/PaymentType";
+import PaymentMethod from "./Component/PaymentMethod";
 import Cheque from "./Component/Cheque";
-import Purchase from "./Component/Purchase";
-import GRN from "./Component/GRN";
-import GRNcart from "./Component/GRNcart";
-import Innvoice from "./Component/Innvoice";
-import User from "./Component/User";
-import Supplier from "./Component/Supplier";
 import ProductVariation from "./Component/Product_Varation";
 
 
@@ -60,26 +55,11 @@ function App() {
         <Route path="/paymentType">
           <PaymentType />
         </Route>
+        <Route path="/paymentMethod">
+          <PaymentMethod />
+        </Route>
         <Route path="/cheque">
           <Cheque />
-        </Route>
-        <Route path="/purchase">
-          <Purchase />
-        </Route>
-        <Route path="/grnList">
-          <GRN />
-        </Route>
-        <Route path="/grnCart">
-          <GRNcart />
-        </Route>
-        <Route path="/innvoice">
-          <Innvoice />
-        </Route>
-        <Route path="/user">
-          <User />
-        </Route>
-        <Route path="/supplier">
-          <Supplier />
         </Route>
         <Route path="/">
           <Dashboard />
