@@ -149,29 +149,33 @@ export default class ProductList extends Component {
                                             Add Product
                                           </h4>
                                           <form onSubmit={this.handleSubmit}>
-                                            <div className="mb-3">
-                                              <label
-                                                htmlFor="formrow-email-input"
-                                                className="form-label"
-                                              >
-                                                Product Name
-                                              </label>
-                                              <input
-                                                type="text"
-                                                className="form-control"
-                                                name="p_name"
-                                                value={p_name}
-                                                onChange={this.handleChange}
-                                              />
-                                            </div>
-                                            <div className="mb-3">
-                                              <label
-                                                htmlFor="formrow-email-input"
-                                                className="form-label"
-                                              >
-                                                Product Variation
-                                              </label>
-                                              <select
+                                            <div className="row">
+                                              <div className="col-lg-6">
+                                                <div className="mb-3">
+                                                  <label
+                                                    htmlFor="formrow-email-input"
+                                                    className="form-label"
+                                                  >
+                                                    Product Name
+                                                  </label>
+                                                  <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="p_name"
+                                                    value={p_name}
+                                                    onChange={this.handleChange}
+                                                  />
+                                                </div>
+                                              </div>
+                                              <div className="col-lg-6">
+                                                <div className="mb-3">
+                                                  <label
+                                                    htmlFor="formrow-email-input"
+                                                    className="form-label"
+                                                  >
+                                                    Product Variation
+                                                  </label>
+                                                  <select
                                                     id="formrow-inputCategoryId"
                                                     className="form-select"
                                                     name="p_pvar_name"
@@ -184,7 +188,8 @@ export default class ProductList extends Component {
                                                     <option></option>
                                                     <option></option>
                                                   </select>
-                                                                                             
+                                                </div>
+                                              </div>
                                             </div>
                                             <div className="row">
                                               <div className="col-lg-10">
@@ -230,8 +235,6 @@ export default class ProductList extends Component {
                                                 </div>
                                               </div>
                                             </div>
-
-                                            
 
                                             <div className="row">
                                               <div className="col-lg-6">
@@ -334,6 +337,60 @@ export default class ProductList extends Component {
                                                   />
                                                 </div>
                                               </div>
+                                              <div className="col-lg-4">
+                                                <div className="mb-3">
+                                                  <label
+                                                    htmlFor="formrow-inputZip"
+                                                    className="form-label"
+                                                  >
+                                                    Unit qty
+                                                  </label>
+                                                  <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="formrow-inputZip"
+                                                    name="p_unit_qty"
+                                                    value={p_unit_qty}
+                                                    onChange={this.handleChange}
+                                                  />
+                                                </div>
+                                              </div>
+                                              <div className="col-lg-4">
+                                                <div className="mb-3">
+                                                  <label
+                                                    htmlFor="formrow-inputZip"
+                                                    className="form-label"
+                                                  >
+                                                    Unit Price
+                                                  </label>
+                                                  <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="formrow-inputZip"
+                                                    name="p_unitPrice"
+                                                    value={p_unitPrice}
+                                                    onChange={this.handleChange}
+                                                  />
+                                                </div>
+                                              </div>
+                                              <div className="col-lg-4">
+                                                <div className="mb-3">
+                                                  <label
+                                                    htmlFor="formrow-inputZip"
+                                                    className="form-label"
+                                                  >
+                                                    Unit Value
+                                                  </label>
+                                                  <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="formrow-inputZip"
+                                                    name="p_unitValue"
+                                                    value={p_unitValue}
+                                                    onChange={this.handleChange}
+                                                  />
+                                                </div>
+                                              </div>
 
                                               <div className="col-lg-4">
                                                 <div className="mb-3">
@@ -367,6 +424,24 @@ export default class ProductList extends Component {
                                                     id="formrow-inputZip"
                                                     name="p_barcode"
                                                     value={p_barcode}
+                                                    onChange={this.handleChange}
+                                                  />
+                                                </div>
+                                              </div>
+                                              <div className="col-lg-4">
+                                                <div className="mb-3">
+                                                  <label
+                                                    htmlFor="formrow-inputZip"
+                                                    className="form-label"
+                                                  >
+                                                    Added Date
+                                                  </label>
+                                                  <input
+                                                    type="Date"
+                                                    className="form-control"
+                                                    id="formrow-inputZip"
+                                                    name="p_addedDate"
+                                                    value={p_addedDate}
                                                     onChange={this.handleChange}
                                                   />
                                                 </div>
@@ -485,12 +560,18 @@ export default class ProductList extends Component {
                               <th className="align-middle">Sell Price</th>
                               <th className="align-middle">Qty</th>
                               <th className="align-middle">Bar Code</th>
+                              <th className="align-middle">Unit_qty</th>
+                              <th className="align-middle">Unit_price</th>
+                              <th className="align-middle">Unit_value</th>
                               <th className="align-middle">Brand Name</th>
                               <th className="align-middle">Cat. Name</th>
                               <th className="align-middle">unit Name</th>
                               <th className="align-middle">Action</th>
-                              <th className="align-middle">Product Variation</th>
-                              
+                              <th className="align-middle">
+                                Product Variation
+                              </th>
+                              <th className="align-middle">Added Date</th>
+
                               <th></th>
                             </tr>
                           </thead>
@@ -511,17 +592,21 @@ export default class ProductList extends Component {
                                       />
                                     </div>
                                   </td>
-                                  
+
                                   <td>{data.p_name}</td>
                                   <td>{data.p_image}</td>
                                   <td>{data.p_buyingPrice}</td>
                                   <td>{data.p_sellingPrice}</td>
                                   <td>{data.p_qty}</td>
                                   <td>{data.p_barcode}</td>
+                                  <td>{data.p_unit_qty}</td>
+                                  <td>{data.p_unitPrice}</td>
+                                  <td>{data.p_unitValue}</td>
                                   <td>{data.p_brand_name}</td>
                                   <td>{data.p_cat_name}</td>
                                   <td>{data.p_punit_name}</td>
                                   <td>{data.p_pvar_name}</td>
+                                  <td>{data.p_addedDate}</td>
                                   <td>
                                     {/* Button trigger modal */}
                                     <button

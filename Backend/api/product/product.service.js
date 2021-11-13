@@ -8,7 +8,7 @@ module.exports = {
       [
         
         data.p_name,
-         data.p_pvar_id,
+         //data.p_pvar_id,
         // data.p_brand_id,
         // data.p_cat_id,
         // data.p_punit_id,
@@ -46,7 +46,7 @@ module.exports = {
 
   getProducts: (callback) => {
     pool.query(
-      `select p_name,	p_pvar_name,	p_brand_name,	p_cat_name,	p_punit_name,	p_barcode,	p_qty,	p_unit_qty,	p_buyingPrice,	p_sellingPrice,	p_unitPrice,	p_unitValue,	p_image,	p_isActive,	p_addedDate from products,brand,category,product_variations,product_unit where  product_variations.pvar_id = products.p_pvar_id,  brand.brand_id = products.p_brand_id  ,   category.cat_id = products.p_cat_id and  product_unit.punit_id = products.p_punit_id `,
+      `select p_name,	p_pvar_name,	p_brand_name,	p_cat_name,	p_punit_name,	p_barcode,	p_qty,	p_unit_qty,	p_buyingPrice,	p_sellingPrice,	p_unitPrice,	p_unitValue,	p_image,	p_isActive,	p_addedDate from products,brand,category,product_variations,product_unit where  product_variations.pvar_id = products.p_pvar_id and  brand.brand_id = products.p_brand_id  and  category.cat_id = products.p_cat_id and  product_unit.punit_id = products.p_punit_id `,
       [],
       (error, results, fields) => {
         if (error) {
