@@ -8,12 +8,15 @@ export default class ProductList extends Component {
 
     this.state = {
       products: [],
-
+      brands: [],
+      category: [],
+      variation: [],
+      units: [],
       p_name: "",
-      p_pvar_name: "",
-      p_brand_name: "",
-      p_cat_name: "",
-      p_punit_name: "",
+      pvar_name: "",
+      brand_name: "",
+      cat_name: "",
+      punit_name: "",
       p_barcode: "",
       p_qty: "",
       p_unit_qty: "",
@@ -72,10 +75,10 @@ export default class ProductList extends Component {
   render() {
     const {
       p_name,
-      p_pvar_name,
-      p_brand_name,
-      p_cat_name,
-      p_punit_name,
+      pvar_name,
+      brand_name,
+      cat_name,
+      punit_name,
       p_barcode,
       p_qty,
       p_unit_qty,
@@ -136,10 +139,7 @@ export default class ProductList extends Component {
                           >
                             <div className="modal-dialog ">
                               <div className="modal-content">
-                                {/* <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalFullscreenLabel">Fullscreen Modal Heading</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-              </div> */}
+                                
                                 <div className="modal-body">
                                   <div className="row">
                                     <div className="col-xl-12">
@@ -178,15 +178,16 @@ export default class ProductList extends Component {
                                                   <select
                                                     id="formrow-inputCategoryId"
                                                     className="form-select"
-                                                    name="p_pvar_name"
-                                                    value={p_pvar_name}
+                                                    name="pvar_name"
+                                                    value={pvar_name}
                                                     onChange={this.handleChange}
                                                   >
                                                     <option selected>
                                                       Choose
                                                     </option>
-                                                    <option></option>
-                                                    <option></option>
+                                                    {this.state.variation.map((data) => <option key = {data.pvar_id} >{data.pvar_name}</option>)}
+                                                    
+                                                    
                                                   </select>
                                                 </div>
                                               </div>
@@ -203,15 +204,14 @@ export default class ProductList extends Component {
                                                   <select
                                                     id="formrow-inputCategoryId"
                                                     className="form-select"
-                                                    name="p_cat_name"
-                                                    value={p_cat_name}
+                                                    name="cat_name"
+                                                    value={cat_name}
                                                     onChange={this.handleChange}
                                                   >
                                                     <option selected>
                                                       Choose
                                                     </option>
-                                                    <option></option>
-                                                    <option></option>
+                                                    {this.state.category.map((data) => <option key = {data.cat_id} >{data.cat_name}</option>)}
                                                   </select>
                                                   {/* <button type="button" className="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#exampleModalFullscreen">+</button> */}
                                                 </div>
@@ -248,15 +248,14 @@ export default class ProductList extends Component {
                                                   <select
                                                     type="text"
                                                     className="form-select"
-                                                    name="p_brand_name"
-                                                    value={p_brand_name}
+                                                    name="brand_name"
+                                                    value={brand_name}
                                                     onChange={this.handleChange}
                                                   >
                                                     <option selected>
                                                       Choose
                                                     </option>
-                                                    <option>3</option>
-                                                    <option>4</option>
+                                                    {this.state.brands.map((data) => <option key = {data.brand_id} >{data.brand_name}</option>)}
                                                   </select>
                                                 </div>
                                               </div>
@@ -271,15 +270,14 @@ export default class ProductList extends Component {
                                                   <select
                                                     id="formrow-inputState"
                                                     className="form-select"
-                                                    name="p_punit_name"
-                                                    value={p_punit_name}
+                                                    name="punit_name"
+                                                    value={punit_name}
                                                     onChange={this.handleChange}
                                                   >
                                                     <option selected>
                                                       Choose...
                                                     </option>
-                                                    <option>42</option>
-                                                    <option>43</option>
+                                                    {this.state.units.map((data) => <option key = {data.punit_id} >{data.punit_name}</option>)}
                                                   </select>
                                                 </div>
                                               </div>
@@ -525,10 +523,7 @@ export default class ProductList extends Component {
                                     </div>
                                   </div>
                                 </div>
-                                {/* <div className="modal-footer">
-                <button type="button" className="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary waves-effect waves-light">Save changes</button>
-              </div> */}
+                               
                               </div>
                               {/* /.modal-content */}
                             </div>
@@ -578,7 +573,7 @@ export default class ProductList extends Component {
                           <tbody>
                             {this.state.products.map((data) => {
                               return (
-                                <tr key={data.productID}>
+                                <tr key={data.p_id}>
                                   <td>
                                     <div className="form-check font-size-16">
                                       <input
@@ -602,10 +597,10 @@ export default class ProductList extends Component {
                                   <td>{data.p_unit_qty}</td>
                                   <td>{data.p_unitPrice}</td>
                                   <td>{data.p_unitValue}</td>
-                                  <td>{data.p_brand_name}</td>
-                                  <td>{data.p_cat_name}</td>
-                                  <td>{data.p_punit_name}</td>
-                                  <td>{data.p_pvar_name}</td>
+                                  <td>{data.brand_name}</td>
+                                  <td>{data.cat_name}</td>
+                                  <td>{data.punit_name}</td>
+                                  <td>{data.pvar_name}</td>
                                   <td>{data.p_addedDate}</td>
                                   <td>
                                     {/* Button trigger modal */}
