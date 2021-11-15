@@ -3,9 +3,9 @@ const pool = require("../../config/database");
 module.exports = {
   create: (data, callback) => {
     pool.query(
-      `insert into expenses(exp_id, exp_refNumber, exp_refAmount , exptype_id)
-                        values(?,?,?,?)`,
-      [data.exp_id, data.exp_refNumber, data.exp_refAmount, data.exptype_id],
+      `insert into expenses(exp_refNumber, exp_refAmount , exptype_id)
+                        values(?,?,?)`,
+      [data.exp_refNumber, data.exp_refAmount, data.exptype_id],
       (error, results, fields) => {
         if (error) {
           return callback(error);
@@ -16,7 +16,9 @@ module.exports = {
   },
   getExpenses: (callback) => {
     pool.query(
-      `select exp_id, exp_refNumber, exp_refAmount ,exptype_id from expenses`,
+      `select exp_refNumber, exp_refAmount ,exprtype_name 
+      from expenses,expenses_type
+      where expenses_type.exptype_id= expenses.exptype_id`,
       [],
       (error, results, fields) => {
         if (error) {

@@ -1,8 +1,90 @@
 import React, { Component } from "react";
+import axios from "axios";
 import Main from "./Main";
 
 export default class ExpenseType extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      extype: [],
+      exptype_id: "",	
+      exprtype_name: "",
+     
+    };
+  }
+
+  componentDidMount() {
+    axios.get("http://localhost:4000/api/expenses_type").then((response) => {
+      this.setState({
+        extype: response.data.data,
+      });
+      console.log(response.data.data);
+    });
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:4000/api/expenses_type", this.state)
+      .then((response) => {
+        console.log(response.data);
+        this.componentDidMount();
+      });
+  };
+
+  deleteType = (exptype_id) => {
+    axios
+      .delete("http://localhost:4000/api/expenses_type/" + exptype_id)
+      .then((response) => {
+        if (response.data != null) {
+          alert("ExpensesType deleted succesfully.");
+
+          this.setState({
+            extype: this.state.extype.filter(
+              (data) => data.exptype_id !== exptype_id
+            ),
+          });
+        }
+        console.log(response);
+      });
+  };
+
+  findTypeById = (exptype_id) => {
+    axios
+      .get("http://localhost:4000/api/expenses_type/" + exptype_id)
+      .then((response) => {
+        if (response.data != null) {
+          let data = response.data.data;
+          console.log(data.exptype_id);
+          this.setState({
+            exptype_id: data.exptype_id,	
+            exprtype_name: data.exprtype_name,
+            
+          });
+        }
+      });
+  };
+
+  handleUpdate = (e) => {
+    e.preventDefault();
+    axios
+      .patch("http://localhost:4000/api/expenses_type", this.state)
+      .then((response) => {
+        console.log(response.data);
+        this.componentDidMount();
+      });
+  };
+
   render() {
+    const { exprtype_name } = this.state;
+
     return (
       <body data-sidebar="dark">
         <Main />
@@ -14,11 +96,8 @@ export default class ExpenseType extends Component {
                 <div className="col-lg-12">
                   <div className="card">
                     <div className="card-body">
-                      <h4 className="card-title mb-4">Expense Type</h4>
-                      {/* <div class="page-title-box d-sm-flex align-items-center justify-content-between"> */}
-                      {/* <div class="page-title-right">
-                <a href="/#" class="btn btn-primary waves-effect waves-light">Add Product</a>
-                </div> */}
+                      <h4 className="card-title mb-4">Expense Type List</h4>
+
                       <div className="row">
                         <div className="col-xl-10">
                           <button
@@ -27,7 +106,7 @@ export default class ExpenseType extends Component {
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModalFullscreen"
                           >
-                            + Add Expense Type
+                            + Add Type
                           </button>
                         </div>
                         <div class="col-xl-2">
@@ -43,116 +122,10 @@ export default class ExpenseType extends Component {
                             </label>
                           </div>
                         </div>
-                        <div>
-                          {/* <button type="button" className="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#exampleModalFullscreen">+ Add Unit</button> */}
-                          {/* sample modal content */}
-                          <div
-                            id="exampleModalFullscreen"
-                            className="modal fade"
-                            tabIndex={-1}
-                            aria-labelledby="#exampleModalFullscreenLabel"
-                            aria-hidden="true"
-                          >
-                            <div className="modal-dialog ">
-                              <div className="modal-content">
-                                {/* <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalFullscreenLabel">Fullscreen Modal Heading</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-              </div> */}
-                                <div className="modal-body">
-                                  <div className="row">
-                                    <div className="col-xl-12">
-                                      <div className="card">
-                                        <div className="card-body">
-                                          <h4 className="card-title mb-6">
-                                            Add Expense Type
-                                          </h4>
-                                          <form>
-                                            <div className="col-md-8">
-                                              <div className="mb-6">
-                                                <label
-                                                  htmlFor="formrow-email-input"
-                                                  className="form-label"
-                                                >
-                                                  expType Id
-                                                </label>
-                                                <input
-                                                  type="email"
-                                                  className="form-control"
-                                                  id="formrow-email-input"
-                                                />
-                                              </div>
-                                            </div>
-                                            <div className="row">
-                                              <div className="col-md-8">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-firstname-input"
-                                                    className="form-label"
-                                                  >
-                                                    Expense Type
-                                                  </label>
-                                                  <select
-                                                    id="formrow-inputProductId"
-                                                    className="form-select"
-                                                  >
-                                                    <option selected>
-                                                      Choose
-                                                    </option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                            </div>
-
-                                            <div className="mb-3">
-                                              <div className="form-check">
-                                                <input
-                                                  className="form-check-input"
-                                                  type="checkbox"
-                                                  id="gridCheck"
-                                                />
-                                                <label
-                                                  className="form-check-label"
-                                                  htmlFor="gridCheck"
-                                                >
-                                                  Check me out
-                                                </label>
-                                              </div>
-                                            </div>
-                                            <div class="d-flex flex-wrap gap-2">
-                                              <button
-                                                type="submit"
-                                                class="btn btn-primary waves-effect waves-light"
-                                              >
-                                                Submit
-                                              </button>
-                                              <button
-                                                type="reset"
-                                                class="btn btn-secondary waves-effect"
-                                                data-bs-dismiss="modal"
-                                              >
-                                                Cancel
-                                              </button>
-                                            </div>
-                                          </form>
-                                        </div>
-                                        {/* end card body */}
-                                      </div>
-                                      {/* end card */}
-                                    </div>
-                                  </div>
-                                </div>
-                                {/* <div className="modal-footer">
-                <button type="button" className="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary waves-effect waves-light">Save changes</button>
-              </div> */}
-                              </div>
-                              {/* /.modal-content */}
-                            </div>
-                            {/* /.modal-dialog */}
-                          </div>
-                        </div>
                       </div>
+
+                      {/**************************** * Table view *****************************/}
+
                       <div className="table-responsive">
                         <table className="table align-middle table-nowrap mb-0">
                           <thead className="table-light">
@@ -170,329 +143,243 @@ export default class ExpenseType extends Component {
                                   />
                                 </div>
                               </th>
-                              <th className="align-middle">expType Id</th>
-                              <th className="align-middle">Expense Type</th>
+                              <th className="align-middle">ExpensesType ID</th>
+                              <th className="align-middle">ExpensesType Name</th>
 
                               <th></th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck02"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck02"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  ext1
-                                </a>{" "}
-                              </td>
-                              <td></td>
+                            {this.state.extype.map((data) => {
+                              return (
+                                <tr key={data.exptype_id}>
+                                  <td>
+                                    <div className="form-check font-size-16">
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="transactionCheck02"
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="transactionCheck02"
+                                      />
+                                    </div>
+                                  </td>
+                                  <td>{data.exptype_id}</td>
+                                  <td>{data.exprtype_name}</td>
 
-                              <td>
-                                <a
-                                  href="/"
-                                  className="btn btn-outline-secondary btn-sm edit"
-                                >
-                                  <i className="fas fa-pencil-alt" />
-                                </a>
-                                <a
-                                  href="/"
-                                  className="btn btn-outline-secondary btn-sm delete"
-                                >
-                                  <i class="mdi mdi-trash-can d-block " />
-                                </a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck03"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck03"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  ext2
-                                </a>{" "}
-                              </td>
-                              <td></td>
+                                  <td>
+                                    <button
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#edit"
+                                      class="btn btn-outline-secondary btn-sm edit"
+                                      title="Edit"
+                                      onClick={this.findTypeById.bind(
+                                        this,
+                                        data.exptype_id
+                                      )}
+                                    >
+                                      <i class="fas fa-pencil-alt"></i>
+                                    </button>
 
-                              <td>
-                                <a
-                                  href="/"
-                                  class="btn btn-outline-secondary btn-sm edit"
-                                  title="Edit"
-                                >
-                                  <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <a
-                                  href="/"
-                                  className="btn btn-outline-secondary btn-sm delete"
-                                >
-                                  <i class="mdi mdi-trash-can d-block " />
-                                </a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck04"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck04"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  ext3
-                                </a>{" "}
-                              </td>
-                              <td></td>
-
-                              <td>
-                                <a
-                                  href="/"
-                                  class="btn btn-outline-secondary btn-sm edit"
-                                  title="Edit"
-                                >
-                                  <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <a
-                                  href="/"
-                                  className="btn btn-outline-secondary btn-sm delete"
-                                >
-                                  <i class="mdi mdi-trash-can d-block " />
-                                </a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck05"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck05"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  ext4
-                                </a>{" "}
-                              </td>
-                              <td> </td>
-
-                              <td>
-                                <a
-                                  href="/"
-                                  class="btn btn-outline-secondary btn-sm edit"
-                                  title="Edit"
-                                >
-                                  <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <a
-                                  href="/"
-                                  className="btn btn-outline-secondary btn-sm delete"
-                                >
-                                  <i class="mdi mdi-trash-can d-block " />
-                                </a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck06"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck06"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  ext5
-                                </a>{" "}
-                              </td>
-                              <td></td>
-
-                              <td>
-                                <a
-                                  href="/"
-                                  class="btn btn-outline-secondary btn-sm edit"
-                                  title="Edit"
-                                >
-                                  <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <a
-                                  href="/"
-                                  className="btn btn-outline-secondary btn-sm delete"
-                                >
-                                  <i class="mdi mdi-trash-can d-block " />
-                                </a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div className="form-check font-size-16">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="transactionCheck07"
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="transactionCheck07"
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                <a href="/#" className="text-body fw-bold">
-                                  ext6
-                                </a>{" "}
-                              </td>
-                              <td></td>
-
-                              <td>
-                                <a
-                                  href="/"
-                                  className="btn btn-outline-secondary btn-sm edit"
-                                  title="Edit"
-                                >
-                                  <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <a
-                                  href="/"
-                                  className="btn btn-outline-secondary btn-sm delete"
-                                >
-                                  <i class="mdi mdi-trash-can d-block " />
-                                </a>
-                              </td>
-                            </tr>
+                                    <button
+                                      className="btn btn-outline-secondary btn-sm delete"
+                                      onClick={this.deleteType.bind(
+                                        this,
+                                        data.exptype_id
+                                      )}
+                                    >
+                                      <i class="mdi mdi-trash-can d-block " />
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
-                      {/* end table-responsive */}
+
+                      {/*******************************  end table-responsive ****************************/}
                     </div>
                   </div>
                 </div>
               </div>
-              {/* end row */}
-              {/* container-fluid */}
-              {/* End Page-content */}
-              {/* Transaction Modal */}
-              {/* <div className="modal fade transaction-detailModal" tabIndex={-1} role="dialog" aria-labelledby="transaction-detailModalLabel" aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="transaction-detailModalLabel">Order Details</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-              </div>
-              <div className="modal-body">
-                <p className="mb-2">Product id: <span className="text-primary">#SK2540</span></p>
-                <p className="mb-4">Billing Name: <span className="text-primary">Neal Matthews</span></p>
-                <div className="table-responsive">
-                  <table className="table align-middle table-nowrap">
-                    <thead>
-                      <tr>
-                        <th scope="col">Product</th>
-                        <th scope="col">Product Name</th>
-                        <th scope="col">Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">
-                          <div>
-                            <img src="assets/images/product/img-7.png" alt="" className="avatar-sm" />
+
+              {/* ***************************  Add Modal *************************/}
+
+              <div>
+                <div
+                  id="exampleModalFullscreen"
+                  className="modal fade"
+                  tabIndex={-1}
+                  aria-labelledby="#exampleModalFullscreenLabel"
+                  aria-hidden="true"
+                >
+                  <div className="modal-dialog ">
+                    <div className="modal-content">
+                      <div className="modal-body">
+                        <div className="row">
+                          <div className="col-xl-12">
+                            <div className="card">
+                              <div className="card-body">
+                                <h4 className="card-title mb-6">Add Type</h4>
+                                <form onSubmit={this.handleSubmit}>
+                                  <div className="row">
+                                    <div className="col-md-6">
+
+                                      <div className="mb-3">
+                                        <label
+                                          htmlFor="formrow-firstname-input"
+                                          className="form-label"
+                                        >
+                                          Expenses Name
+                                        </label>
+                                        <input
+                                          type="text"
+                                          className="form-control"
+                                          id="formrow-email-input"
+                                          name="exprtype_name"
+                                          value={exprtype_name}
+                                          onChange={this.handleChange}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="mb-3">
+                                    <div className="form-check">
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="gridCheck"
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="gridCheck"
+                                      >
+                                        Check me out
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="d-flex flex-wrap gap-2">
+                                    <button
+                                      type="submit"
+                                      class="btn btn-primary waves-effect waves-light"
+                                      value="submit"
+                                    >
+                                      Submit
+                                    </button>
+                                    <button
+                                      type="reset"
+                                      class="btn btn-secondary waves-effect"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      Close
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                              {/* end card body */}
+                            </div>
+                            {/* end card */}
                           </div>
-                        </th>
-                        <td>
-                          <div>
-                            <h5 className="text-truncate font-size-14">Wireless Headphone (Black)</h5>
-                            <p className="text-muted mb-0">$ 225 x 1</p>
-                          </div>
-                        </td>
-                        <td>$ 255</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div>
-                            <img src="assets/images/product/img-4.png" alt="" className="avatar-sm" />
-                          </div>
-                        </th>
-                        <td>
-                          <div>
-                            <h5 className="text-truncate font-size-14">Phone patterned cases</h5>
-                            <p className="text-muted mb-0">$ 145 x 1</p>
-                          </div>
-                        </td>
-                        <td>$ 145</td>
-                      </tr>
-                      <tr>
-                        <td colSpan={2}>
-                          <h6 className="m-0 text-right">Sub Total:</h6>
-                        </td>
-                        <td>
-                          $ 400
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colSpan={2}>
-                          <h6 className="m-0 text-right">Shipping:</h6>
-                        </td>
-                        <td>
-                          Free
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colSpan={2}>
-                          <h6 className="m-0 text-right">Total:</h6>
-                        </td>
-                        <td>
-                          $ 400
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                        </div>
+                      </div>
+                    </div>
+                    {/* /.modal-content */}
+                  </div>
+                  {/* /.modal-dialog */}
                 </div>
               </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+              {/***************************** * Update Modal *************************/}
+
+              <div
+                id="edit"
+                className="modal fade"
+                tabIndex={-1}
+                aria-labelledby="#exampleModalFullscreenLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog ">
+                  <div className="modal-content">
+                    <div className="modal-body">
+                      <div className="row">
+                        <div className="col-xl-12">
+                          <div className="card">
+                            <div className="card-body">
+                              <h4 className="card-title mb-6">Update Type</h4>
+                              <form onSubmit={this.handleUpdate}>
+                                <div className="row">
+                                  
+                                  <div className="col-md-6">
+                                    <div className="mb-3">
+                                      <label
+                                        htmlFor="formrow-unitname-input"
+                                        className="form-label"
+                                      >
+                                        ExpensesType Name
+                                      </label>
+
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        id="formrow-email-input"
+                                        name="exprtype_name"
+                                        value={this.state.exprtype_name}
+                                        onChange={this.handleChange}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="mb-3">
+                                  <div className="form-check">
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      id="gridCheck"
+                                    />
+                                    <label
+                                      className="form-check-label"
+                                      htmlFor="gridCheck"
+                                    >
+                                      Check me out
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                  <button
+                                    type="submit"
+                                    class="btn btn-primary waves-effect waves-light"
+                                    value="update"
+                                  >
+                                    Update
+                                  </button>
+
+                                  <button
+                                    type="reset"
+                                    class="btn btn-secondary waves-effect"
+                                    data-bs-dismiss="modal"
+                                  >
+                                    Close
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                            {/* end card body */}
+                          </div>
+                          {/* end card */}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* /.modal-content */}
+                </div>
+                {/* /.modal-dialog */}
               </div>
-            </div>
-          </div>
-        </div> */}
-              {/* end modal */}
+
+              {/******************* * end Update Modal ************************/}
             </div>
           </div>
         </div>
