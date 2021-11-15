@@ -3,11 +3,15 @@ const pool = require("../../config/database");
 module.exports = {
   create: (data, callback) => {
     pool.query(
-      `insert into products(p_id, p_name,	p_barcode,	p_qty,	p_unit_qty,	p_buyingPrice,	p_sellingPrice,	p_unitPrice,	p_unitValue,	p_image,	p_isActive,	p_addedDate)
-                        values(?,?,?,?,?,?,?,?,?,?,?,?)`,
+      `insert into products (p_name,p_pvar_id,p_brand_id,p_cat_id,p_punit_id,p_barcode,	p_qty,	p_unit_qty,	p_buyingPrice,	p_sellingPrice,	p_unitPrice,	p_unitValue,	p_image,	p_isActive,	p_addedDate)
+                        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
-        data.p_id,
+  
         data.p_name,
+        data.pvar_id,
+        data.brand_id,
+        data.cat_id,
+        data.punit_id,
         data.p_barcode,
         data.p_qty,
         data.p_unit_qty,
@@ -21,34 +25,29 @@ module.exports = {
       ],
       (error, results, fields) => {
         if (error) {
+          console.log(data);
           return callback(error);
         }
         return callback(null, results);
       }
     );
   },
-  // getProducts: (callback) => {
-  //   pool.query(
-  //     `select p_id,	p_name,	p_pvar_id,	p_brand_id,	p_cat_id,	p_punit_id,	p_barcode,	p_qty,	p_unit_qty,	p_buyingPrice,	p_sellingPrice,	p_unitPrice,	p_unitValue,	p_image,	p_isActive,	p_addedDate from products`,
-  //     [],
-  //     (error, results, fields) => {
-  //       if (error) {
-  //         return callback(error);
-  //       }
-  //       return callback(null, results);
-  //     }
-  //   );
-  // },
+
 
   getProducts: (callback) => {
     pool.query(
-      `select p_id, p_name,	pvar_name,	brand_name,	cat_name,	punit_name,	p_barcode,	p_qty,	p_unit_qty,	p_buyingPrice,	p_sellingPrice,	p_unitPrice,	p_unitValue,	p_image,	p_isActive,	p_addedDate from products,brand,category,product_variations,product_unit where  product_variations.pvar_id = products.p_pvar_id AND brand.brand_id = products.p_brand_id AND  category.cat_id = products.p_cat_id AND  product_unit.punit_id = products.p_punit_id `,
+      `SELECT p_id, p_name,	pvar_name,	brand_name,	cat_name,	punit_name,	p_barcode,	p_qty,	p_unit_qty,	p_buyingPrice,	p_sellingPrice,	p_unitPrice,	p_unitValue,	p_image,	p_isActive,	p_addedDate 
+      FROM products,brand,category,product_variations,product_unit 
+      WHERE brand.brand_id = products.p_brand_id AND category.cat_id = products.p_cat_id AND product_variations.pvar_id = products.p_pvar_id AND  
+        product_unit.punit_id = products.p_punit_id `,
       [],
-      (error, results, fields) => {
+      (error, results) => {
         if (error) {
           return callback(error);
         }
+        
         return callback(null, results);
+        
       }
     );
   },
