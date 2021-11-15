@@ -16,8 +16,9 @@ module.exports = {
   },
   getRecodes: (callback) => {
     pool.query(
-      `select rec_id,	p_id,	st_id,	qty,	add_date,	exp,	mfd	
-      from  recode_history`,
+      `select rec_id,	p_name,	st_name,	qty,	add_date,	exp,	mfd	
+      from  recode_history,products,storage_location
+      where products.p_id= recode_history.p_id and storage_location.st_id= recode_history.st_id`,
       [],
       (error, results, fields) => {
         if (error) {
