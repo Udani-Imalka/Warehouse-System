@@ -122,118 +122,10 @@ export default class PaymentMethod extends Component {
                             </label>
                           </div>
                         </div>
-
-                        <div>
-                          <div
-                            id="exampleModalFullscreen"
-                            className="modal fade"
-                            tabIndex={-1}
-                            aria-labelledby="#exampleModalFullscreenLabel"
-                            aria-hidden="true"
-                          >
-                            <div className="modal-dialog ">
-                              <div className="modal-content">
-                                <div className="modal-body">
-                                  <div className="row">
-                                    <div className="col-xl-12">
-                                      <div className="card">
-                                        <div className="card-body">
-                                          <h4 className="card-title mb-6">
-                                            Add Payment Method
-                                          </h4>
-                                          <form onSubmit={this.handleSubmit}>
-                                            <div className="row">
-                                              <div className="col-md-6">
-                                                <div className="mb-6">
-                                                  <label
-                                                    htmlFor="formrow-name-input"
-                                                    className="form-label"
-                                                  >
-                                                    PaymentMethod Name
-                                                  </label>
-                                                  <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="formrow-name-input"
-                                                    name="paym_name"
-                                                    value={paym_name}
-                                                    onChange={this.handleChange}
-                                                  />
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-method-input"
-                                                    className="form-label"
-                                                  >
-                                                    Payment Method Type
-                                                  </label>
-                                                  <select
-                                                    id="formrow-inputLocation"
-                                                    className="form-select"
-                                                    name="paym_type"
-                                                    value={paym_type}
-                                                    onChange={this.handleChange}
-                                                  >
-                                                    <option selected>
-                                                      Choose
-                                                    </option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                            </div>
-
-                                            <div className="mb-3">
-                                              <div className="form-check">
-                                                <input
-                                                  className="form-check-input"
-                                                  type="checkbox"
-                                                  id="gridCheck"
-                                                />
-                                                <label
-                                                  className="form-check-label"
-                                                  htmlFor="gridCheck"
-                                                >
-                                                  Check me out
-                                                </label>
-                                              </div>
-                                            </div>
-                                            <div class="d-flex flex-wrap gap-2">
-                                              <button
-                                                type="submit"
-                                                class="btn btn-primary waves-effect waves-light"
-                                                value="submit"
-                                              >
-                                                Submit
-                                              </button>
-                                              <button
-                                                type="reset"
-                                                class="btn btn-secondary waves-effect"
-                                                data-bs-dismiss="modal"
-                                              >
-                                                Close
-                                              </button>
-                                            </div>
-                                          </form>
-                                        </div>
-                                        {/* end card body */}
-                                      </div>
-                                      {/* end card */}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              {/* /.modal-content */}
-                            </div>
-                            {/* /.modal-dialog */}
-                          </div>
-                        </div>
                       </div>
+
+                    {/************* Table View *******************/}
+
                       <div className="table-responsive">
                         <table className="table align-middle table-nowrap mb-0">
                           <thead className="table-light">
@@ -325,7 +217,119 @@ export default class PaymentMethod extends Component {
           </div>
         </div>
 
-        {/* update modal */}
+        {/************* Add modal *******************/}
+
+        <div>
+          <div
+            id="exampleModalFullscreen"
+            className="modal fade"
+            tabIndex={-1}
+            aria-labelledby="#exampleModalFullscreenLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog ">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <div className="row">
+                    <div className="col-xl-12">
+                      <div className="card">
+                        <div className="card-body">
+                          <h4 className="card-title mb-6">
+                            Add Payment Method
+                          </h4>
+                          <form onSubmit={this.handleSubmit}>
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="mb-6">
+                                  <label
+                                    htmlFor="formrow-name-input"
+                                    className="form-label"
+                                  >
+                                    PaymentMethod Name
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    id="formrow-name-input"
+                                    name="paym_name"
+                                    value={paym_name}
+                                    onChange={this.handleChange}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="col-md-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-method-input"
+                                    className="form-label"
+                                  >
+                                    Payment Method Type
+                                  </label>
+                                  <select
+                                    id="formrow-inputLocation"
+                                    className="form-select"
+                                    name="paym_type"
+                                    value={paym_type}
+                                    onChange={this.handleChange}
+                                  >
+                                    <option selected>Choose</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="mb-3">
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="gridCheck"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="gridCheck"
+                                >
+                                  Check me out
+                                </label>
+                              </div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2">
+                              <button
+                                type="submit"
+                                class="btn btn-primary waves-effect waves-light"
+                                value="submit"
+                              >
+                                Submit
+                              </button>
+                              <button
+                                type="reset"
+                                class="btn btn-secondary waves-effect"
+                                data-bs-dismiss="modal"
+                              >
+                                Close
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                        {/* end card body */}
+                      </div>
+                      {/* end card */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* /.modal-content */}
+            </div>
+            {/* /.modal-dialog */}
+          </div>
+        </div>
+        {/************* end Add modal *******************/}
+
+        {/************* update modal *******************/}
         <div>
           <div
             id="edit"
