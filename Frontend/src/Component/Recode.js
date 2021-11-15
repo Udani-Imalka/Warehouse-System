@@ -8,6 +8,10 @@ export default class Recode extends Component {
 
     this.state = {
       recode: [],
+      products: [],
+      location: [],
+      p_name: "",
+      st_name: "",
       rec_id: "",
       p_id: "",
       st_id: "",
@@ -23,7 +27,21 @@ export default class Recode extends Component {
       this.setState({
         recode: response.data.data,
       });
-      console.log(response.data.data);
+      // console.log(response.data.data);
+    });
+
+    axios.get("http://localhost:4000/api/storage").then((response) => {
+      this.setState({
+        location: response.data.data,
+      });
+      // console.log(response.data.data);
+    });
+
+    axios.get("http://localhost:4000/api/product").then((response) => {
+      this.setState({
+        products: response.data.data,
+      });
+      //console.log(response.data.data);
     });
   }
 
@@ -101,7 +119,7 @@ export default class Recode extends Component {
                   <div className="card">
                     <div className="card-body">
                       <h4 className="card-title mb-4">Recode List</h4>
-                      
+
                       <div className="row">
                         <div className="col-xl-10">
                           <button
@@ -124,227 +142,6 @@ export default class Recode extends Component {
                                 aria-controls="datatable"
                               ></input>
                             </label>
-                          </div>
-                        </div>
-                        <div>
-                          <div
-                            id="exampleModalFullscreen"
-                            className="modal fade"
-                            tabIndex={-1}
-                            aria-labelledby="#exampleModalFullscreenLabel"
-                            aria-hidden="true"
-                          >
-                            <div className="modal-dialog ">
-                              <div className="modal-content">
-                                <div className="modal-body">
-                                  <div className="row">
-                                    <div className="col-xl-12">
-                                      <div className="card">
-                                        <div className="card-body">
-                                          <h4 className="card-title mb-4">
-                                            Add Recode
-                                          </h4>
-                                          <form onSubmit={this.handleSubmit}>
-                                            <div className="row">
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-firstname-input"
-                                                    className="form-label"
-                                                  >
-                                                    Qty
-                                                  </label>
-                                                  <input
-                                                    type="qty"
-                                                    className="form-control"
-                                                    id="formrow-qty-input"
-                                                    name="qty"
-                                                    value={qty}
-                                                    onChange={this.handleChange}
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="row">
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-productId-input"
-                                                    className="form-label"
-                                                  >
-                                                    Product Name
-                                                  </label>
-                                                  <input
-                                                    id="formrow-inputProductId"
-                                                    className="form-control"
-                                                    name="p_id"
-                                                    value={p_id}
-                                                    onChange={this.handleChange}
-                                                  ></input>
-                                                </div>
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-stId-input"
-                                                    className="form-label"
-                                                  >
-                                                    Storage Location
-                                                  </label>
-                                                  <select
-                                                    id="formrow-inputCategoryId"
-                                                    className="form-select"
-                                                    name="st_id"
-                                                    value={st_id}
-                                                    onChange={this.handleChange}
-                                                  >
-                                                    <option selected>
-                                                      Choose
-                                                    </option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="row">
-                                              <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-inputCity"
-                                                    className="form-label"
-                                                  >
-                                                    Added Date
-                                                  </label>
-                                                  <div
-                                                    className="input-group"
-                                                    id="datepicker1"
-                                                  >
-                                                    <input
-                                                      type="date"
-                                                      className="form-control"
-                                                      data-date-format="dd M, yyyy"
-                                                      data-date-container="#datepicker1"
-                                                      data-provide="datepicker"
-                                                      name="add_date"
-                                                      value={add_date}
-                                                      onChange={
-                                                        this.handleChange
-                                                      }
-                                                    />
-                                                    <span className="input-group-text">
-                                                      <i className="mdi mdi-calendar" />
-                                                    </span>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-inputCity"
-                                                    className="form-label"
-                                                  >
-                                                    Ex. Date
-                                                  </label>
-                                                  <div
-                                                    className="input-group"
-                                                    id="datepicker1"
-                                                  >
-                                                    <input
-                                                      type="date"
-                                                      className="form-control"
-                                                      placeholder="dd M, yyyy"
-                                                      data-date-format="dd M, yyyy"
-                                                      data-date-container="#datepicker1"
-                                                      data-provide="datepicker"
-                                                      name="exp"
-                                                      value={exp}
-                                                      onChange={
-                                                        this.handleChange
-                                                      }
-                                                    />
-                                                    <span className="input-group-text">
-                                                      <i className="mdi mdi-calendar" />
-                                                    </span>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              <div className="col-lg-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-inputCity"
-                                                    className="form-label"
-                                                  >
-                                                    Mf.Date
-                                                  </label>
-                                                  <div
-                                                    className="input-group"
-                                                    id="datepicker1"
-                                                  >
-                                                    <input
-                                                      type="date"
-                                                      className="form-control"
-                                                      placeholder="dd M, yyyy"
-                                                      data-date-format="dd M, yyyy"
-                                                      data-date-container="#datepicker1"
-                                                      data-provide="datepicker"
-                                                      name="mfd"
-                                                      value={mfd}
-                                                      onChange={
-                                                        this.handleChange
-                                                      }
-                                                    />
-                                                    <span className="input-group-text">
-                                                      <i className="mdi mdi-calendar" />
-                                                    </span>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="mb-3">
-                                              <div className="form-check">
-                                                <input
-                                                  className="form-check-input"
-                                                  type="checkbox"
-                                                  id="gridCheck"
-                                                />
-                                                <label
-                                                  className="form-check-label"
-                                                  htmlFor="gridCheck"
-                                                >
-                                                  Check me out
-                                                </label>
-                                              </div>
-                                            </div>
-                                            <div class="d-flex flex-wrap gap-2">
-                                              <button
-                                                type="submit"
-                                                class="btn btn-primary waves-effect waves-light"
-                                                value="submit"
-                                              >
-                                                Submit
-                                              </button>
-                                              <button
-                                                type="reset"
-                                                class="btn btn-secondary waves-effect"
-                                                data-bs-dismiss="modal"
-                                              >
-                                                Close
-                                              </button>
-                                            </div>
-                                          </form>
-                                        </div>
-                                        {/* end card body */}
-                                      </div>
-                                      {/* end card */}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              {/* /.modal-content */}
-                            </div>
-                            {/* /.modal-dialog */}
                           </div>
                         </div>
                       </div>
@@ -395,12 +192,12 @@ export default class Recode extends Component {
 
                                   <td>{data.p_name}</td>
                                   <td>{data.qty}</td>
-                                  <td>{data.st_id}</td>
+                                  <td>{data.st_name}</td>
                                   <td>{data.add_date}</td>
                                   <td>{data.exp}</td>
                                   <td>{data.mfd}</td>
                                   <td>
-                                  <button
+                                    <button
                                       data-bs-toggle="modal"
                                       data-bs-target="#edit"
                                       class="btn btn-outline-secondary btn-sm edit"
@@ -439,10 +236,12 @@ export default class Recode extends Component {
             </div>
           </div>
         </div>
-        {/* update modal */}
+
+        {/********************* Add modal  ************************/}
+
         <div>
           <div
-            id="edit"
+            id="exampleModalFullscreen"
             className="modal fade"
             tabIndex={-1}
             aria-labelledby="#exampleModalFullscreenLabel"
@@ -456,7 +255,7 @@ export default class Recode extends Component {
                       <div className="card">
                         <div className="card-body">
                           <h4 className="card-title mb-4">Add Recode</h4>
-                          <form onSubmit={this.handleUpdate}>
+                          <form onSubmit={this.handleSubmit}>
                             <div className="row">
                               <div className="col-md-6">
                                 <div className="mb-3">
@@ -486,13 +285,21 @@ export default class Recode extends Component {
                                   >
                                     Product Name
                                   </label>
-                                  <input
+                                  <select
                                     id="formrow-inputProductId"
-                                    className="form-control"
+                                    className="form-select"
                                     name="p_id"
                                     value={p_id}
                                     onChange={this.handleChange}
-                                  ></input>
+                                  >
+                                    <option selected>Choose</option>
+                                    {this.state.products.map((data) => (
+                                      <option key={data.p_id} value={data.p_id}>
+                                        {data.p_id} {}
+                                        {data.p_name}
+                                      </option>
+                                    ))}
+                                  </select>
                                 </div>
                               </div>
                               <div className="col-md-6">
@@ -504,16 +311,21 @@ export default class Recode extends Component {
                                     Storage Location
                                   </label>
                                   <select
-                                    id="formrow-inputCategoryId"
                                     className="form-select"
                                     name="st_id"
                                     value={st_id}
                                     onChange={this.handleChange}
                                   >
                                     <option selected>Choose</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
+                                    {this.state.location.map((data) => (
+                                      <option
+                                        key={data.st_id}
+                                        value={data.st_id}
+                                      >
+                                        {data.st_id} {}
+                                        {data.st_name}
+                                      </option>
+                                    ))}
                                   </select>
                                 </div>
                               </div>
@@ -618,6 +430,225 @@ export default class Recode extends Component {
                                 class="btn btn-primary waves-effect waves-light"
                                 value="submit"
                               >
+                                Submit
+                              </button>
+                              <button
+                                type="reset"
+                                class="btn btn-secondary waves-effect"
+                                data-bs-dismiss="modal"
+                              >
+                                Close
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                        {/* end card body */}
+                      </div>
+                      {/* end card */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* /.modal-content */}
+            </div>
+            {/* /.modal-dialog */}
+          </div>
+        </div>
+
+        {/********************** End Add Modal **************/}
+
+        {/************ update modal ************************/}
+        <div>
+          <div
+            id="edit"
+            className="modal fade"
+            tabIndex={-1}
+            aria-labelledby="#exampleModalFullscreenLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog ">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <div className="row">
+                    <div className="col-xl-12">
+                      <div className="card">
+                        <div className="card-body">
+                          <h4 className="card-title mb-4">Add Recode</h4>
+                          <form onSubmit={this.handleUpdate}>
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-firstname-input"
+                                    className="form-label"
+                                  >
+                                    Qty
+                                  </label>
+                                  <input
+                                    type="qty"
+                                    className="form-control"
+                                    id="formrow-qty-input"
+                                    name="qty"
+                                    value={this.state.qty}
+                                    onChange={this.handleChange}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-productId-input"
+                                    className="form-label"
+                                  >
+                                    Product Name
+                                  </label>
+                                  <select
+                                    id="formrow-inputProductId"
+                                    className="form-select"
+                                    name="p_id"
+                                    value={this.state.p_id}
+                                    onChange={this.handleChange}
+                                  >
+                                    <option selected>Choose</option>
+                                    {this.state.products.map((data) => (
+                                      <option key={data.p_id} value={data.p_id}>
+                                        {data.p_id} {}
+                                        {data.p_name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-stId-input"
+                                    className="form-label"
+                                  >
+                                    Storage Location
+                                  </label>
+                                  <select
+                                    className="form-select"
+                                    name="st_id"
+                                    value={st_id}
+                                    onChange={this.handleChange}
+                                  >
+                                    <option selected>Choose</option>
+                                    {this.state.location.map((data) => (
+                                      <option
+                                        key={data.st_id}
+                                        value={data.st_id}
+                                      >
+                                        {data.st_id} {}
+                                        {data.st_name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="row">
+                              <div className="col-lg-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-inputCity"
+                                    className="form-label"
+                                  >
+                                    Added Date
+                                  </label>
+                                  <div className="input-group" id="datepicker1">
+                                    <input
+                                      type="date"
+                                      className="form-control"
+                                      data-date-format="dd M, yyyy"
+                                      data-date-container="#datepicker1"
+                                      data-provide="datepicker"
+                                      name="add_date"
+                                      value={this.state.add_date}
+                                      onChange={this.handleChange}
+                                    />
+                                    <span className="input-group-text">
+                                      <i className="mdi mdi-calendar" />
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-lg-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-inputCity"
+                                    className="form-label"
+                                  >
+                                    Ex. Date
+                                  </label>
+                                  <div className="input-group" id="datepicker1">
+                                    <input
+                                      type="date"
+                                      className="form-control"
+                                      placeholder="dd M, yyyy"
+                                      data-date-format="dd M, yyyy"
+                                      data-date-container="#datepicker1"
+                                      data-provide="datepicker"
+                                      name="exp"
+                                      value={this.state.exp}
+                                      onChange={this.handleChange}
+                                    />
+                                    <span className="input-group-text">
+                                      <i className="mdi mdi-calendar" />
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-lg-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-inputCity"
+                                    className="form-label"
+                                  >
+                                    Mf.Date
+                                  </label>
+                                  <div className="input-group" id="datepicker1">
+                                    <input
+                                      type="date"
+                                      className="form-control"
+                                      placeholder="dd M, yyyy"
+                                      data-date-format="dd M, yyyy"
+                                      data-date-container="#datepicker1"
+                                      data-provide="datepicker"
+                                      name="mfd"
+                                      value={this.state.mfd}
+                                      onChange={this.handleChange}
+                                    />
+                                    <span className="input-group-text">
+                                      <i className="mdi mdi-calendar" />
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="mb-3">
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="gridCheck"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="gridCheck"
+                                >
+                                  Check me out
+                                </label>
+                              </div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2">
+                              <button
+                                type="submit"
+                                class="btn btn-primary waves-effect waves-light"
+                                value="submit"
+                              >
                                 Update
                               </button>
                               <button
@@ -642,7 +673,7 @@ export default class Recode extends Component {
             {/* /.modal-dialog */}
           </div>
         </div>
-        {/* end modal */}
+        {/************* end Update  modal **********************/}
       </body>
     );
   }

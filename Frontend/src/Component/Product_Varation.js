@@ -96,7 +96,9 @@ export default class ProductVariation extends Component {
                 <div className="col-lg-12">
                   <div className="card">
                     <div className="card-body">
-                      <h4 className="card-title mb-4">Product Variation List</h4>
+                      <h4 className="card-title mb-4">
+                        Product Variation List
+                      </h4>
 
                       <div className="row">
                         <div className="col-xl-10">
@@ -122,116 +124,10 @@ export default class ProductVariation extends Component {
                             </label>
                           </div>
                         </div>
-
-                        <div>
-                          <div
-                            id="exampleModalFullscreen1"
-                            className="modal fade"
-                            tabIndex={-1}
-                            aria-labelledby="#exampleModalFullscreenLabel"
-                            aria-hidden="true"
-                          >
-                            <div className="modal-dialog ">
-                              <div className="modal-content">
-                                <div className="modal-body">
-                                  <div className="row">
-                                    <div className="col-xl-12">
-                                      <div className="card">
-                                        <div className="card-body">
-                                          <h4 className="card-title mb-4">
-                                            Add Variation
-                                          </h4>
-                                          <form onSubmit={this.handleSubmit}>
-                                            <div className="row">
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-name-input"
-                                                    className="form-label"
-                                                  >
-                                                    Product Variation
-                                                  </label>
-                                                  <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="formrow-name-input"
-                                                    name="pvar_name"
-                                                    value={pvar_name}
-                                                    onChange={this.handleChange}
-                                                  />
-                                                </div>
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-type-input"
-                                                    className="form-label"
-                                                  >
-                                                    Variation Type
-                                                  </label>
-                                                  <select
-                                                    id="formrow-inputProductId"
-                                                    className="form-select"
-                                                    name="pvar_type"
-                                                    value={pvar_type}
-                                                    onChange={this.handleChange}
-                                                  >
-                                                    <option selected>
-                                                      Choose
-                                                    </option>
-                                                    <option>type1</option>
-                                                    <option>type2</option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                            </div>
-
-                                            <div className="mb-3">
-                                              <div className="form-check">
-                                                <input
-                                                  className="form-check-input"
-                                                  type="checkbox"
-                                                  id="gridCheck"
-                                                />
-                                                <label
-                                                  className="form-check-label"
-                                                  htmlFor="gridCheck"
-                                                >
-                                                  Check me out
-                                                </label>
-                                              </div>
-                                            </div>
-                                            <div class="d-flex flex-wrap gap-2">
-                                              <button
-                                                type="submit"
-                                                class="btn btn-primary waves-effect waves-light"
-                                                value="submit"
-                                              >
-                                                Submit
-                                              </button>
-                                              <button
-                                                type="reset"
-                                                class="btn btn-secondary waves-effect"
-                                                data-bs-dismiss="modal"
-                                              >
-                                                Close
-                                              </button>
-                                            </div>
-                                          </form>
-                                        </div>
-                                        {/* end card body */}
-                                      </div>
-                                      {/* end card */}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              {/* /.modal-content */}
-                            </div>
-                            {/* /.modal-dialog */}
-                          </div>
-                        </div>
                       </div>
+
+                    {/*************** Table View ********************/}
+
                       <div className="table-responsive">
                         <table className="table align-middle table-nowrap mb-0">
                           <thead className="table-light">
@@ -318,7 +214,117 @@ export default class ProductVariation extends Component {
             </div>
           </div>
         </div>
-        {/* update modal */}
+
+        {/********************* Add modal ***************************/}
+
+        <div>
+          <div
+            id="exampleModalFullscreen1"
+            className="modal fade"
+            tabIndex={-1}
+            aria-labelledby="#exampleModalFullscreenLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog ">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <div className="row">
+                    <div className="col-xl-12">
+                      <div className="card">
+                        <div className="card-body">
+                          <h4 className="card-title mb-4">Add Variation</h4>
+                          <form onSubmit={this.handleSubmit}>
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-name-input"
+                                    className="form-label"
+                                  >
+                                    Product Variation
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    id="formrow-name-input"
+                                    name="pvar_name"
+                                    value={pvar_name}
+                                    onChange={this.handleChange}
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-type-input"
+                                    className="form-label"
+                                  >
+                                    Variation Type
+                                  </label>
+                                  <select
+                                    id="formrow-inputProductId"
+                                    className="form-select"
+                                    name="pvar_type"
+                                    value={pvar_type}
+                                    onChange={this.handleChange}
+                                  >
+                                    <option selected>Choose</option>
+                                    <option>type1</option>
+                                    <option>type2</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="mb-3">
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="gridCheck"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="gridCheck"
+                                >
+                                  Check me out
+                                </label>
+                              </div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2">
+                              <button
+                                type="submit"
+                                class="btn btn-primary waves-effect waves-light"
+                                value="submit"
+                              >
+                                Submit
+                              </button>
+                              <button
+                                type="reset"
+                                class="btn btn-secondary waves-effect"
+                                data-bs-dismiss="modal"
+                              >
+                                Close
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                        {/* end card body */}
+                      </div>
+                      {/* end card */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* /.modal-content */}
+            </div>
+            {/* /.modal-dialog */}
+          </div>
+        </div>
+
+        {/************** end add modal ******************/}
+
+        {/******************* update modal **********************/}
         <div>
           <div
             id="edit"
@@ -422,6 +428,8 @@ export default class ProductVariation extends Component {
             {/* /.modal-dialog */}
           </div>
         </div>
+
+        {/******************** End update modal ***************/}
       </body>
     );
   }

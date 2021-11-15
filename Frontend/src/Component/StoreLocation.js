@@ -43,7 +43,7 @@ export default class StoreLocation extends Component {
     e.preventDefault();
     axios
       .patch("http://localhost:4000/api/storage", this.state)
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         this.componentDidMount();
       });
@@ -120,118 +120,10 @@ export default class StoreLocation extends Component {
                             </label>
                           </div>
                         </div>
-
-                        <div>
-                          <div
-                            id="exampleModalFullscreen"
-                            className="modal fade"
-                            tabIndex={-1}
-                            aria-labelledby="#exampleModalFullscreenLabel"
-                            aria-hidden="true"
-                          >
-                            <div className="modal-dialog ">
-                              <div className="modal-content">
-                                <div className="modal-body">
-                                  <div className="row">
-                                    <div className="col-xl-12">
-                                      <div className="card">
-                                        <div className="card-body">
-                                          <h4 className="card-title mb-6">
-                                            Add Loaction
-                                          </h4>
-                                          <form onSubmit={this.handleSubmit}>
-                                            <div className="row">
-                                              <div className="col-md-6">
-                                                <div className="mb-6">
-                                                  <label
-                                                    htmlFor="formrow-name-input"
-                                                    className="form-label"
-                                                  >
-                                                    store Name
-                                                  </label>
-                                                  <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="formrow-name-input"
-                                                    name="st_name"
-                                                    value={st_name}
-                                                    onChange={this.handleChange}
-                                                  />
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-location-input"
-                                                    className="form-label"
-                                                  >
-                                                    Storeage Location
-                                                  </label>
-                                                  <select
-                                                    id="formrow-inputLocation"
-                                                    className="form-select"
-                                                    name="st_location"
-                                                    value={st_location}
-                                                    onChange={this.handleChange}
-                                                  >
-                                                    <option selected>
-                                                      Choose
-                                                    </option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                            </div>
-
-                                            <div className="mb-3">
-                                              <div className="form-check">
-                                                <input
-                                                  className="form-check-input"
-                                                  type="checkbox"
-                                                  id="gridCheck"
-                                                />
-                                                <label
-                                                  className="form-check-label"
-                                                  htmlFor="gridCheck"
-                                                >
-                                                  Check me out
-                                                </label>
-                                              </div>
-                                            </div>
-                                            <div class="d-flex flex-wrap gap-2">
-                                              <button
-                                                type="submit"
-                                                class="btn btn-primary waves-effect waves-light"
-                                                value="submit"
-                                              >
-                                                Submit
-                                              </button>
-                                              <button
-                                                type="reset"
-                                                class="btn btn-secondary waves-effect"
-                                                data-bs-dismiss="modal"
-                                              >
-                                                Close
-                                              </button>
-                                            </div>
-                                          </form>
-                                        </div>
-                                        {/* end card body */}
-                                      </div>
-                                      {/* end card */}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              {/* /.modal-content */}
-                            </div>
-                            {/* /.modal-dialog */}
-                          </div>
-                        </div>
                       </div>
+
+                     {/********************* * Table view *************************/}
+
                       <div className="table-responsive">
                         <table className="table align-middle table-nowrap mb-0">
                           <thead className="table-light">
@@ -304,22 +196,129 @@ export default class StoreLocation extends Component {
                           </tbody>
                         </table>
                       </div>
-                      {/* end table-responsive */}
+                      {/*************** * end table-responsive *****************88*/}
                     </div>
                   </div>
                 </div>
               </div>
               {/* end row */}
-              {/* container-fluid */}
-              {/* End Page-content */}
-              {/* Transaction Modal */}
-
-              {/* end modal */}
+              
             </div>
           </div>
         </div>
 
-        {/* update modal */}
+        {/********************* * Add modal *************************/}
+
+        <div>
+          <div
+            id="exampleModalFullscreen"
+            className="modal fade"
+            tabIndex={-1}
+            aria-labelledby="#exampleModalFullscreenLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog ">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <div className="row">
+                    <div className="col-xl-12">
+                      <div className="card">
+                        <div className="card-body">
+                          <h4 className="card-title mb-6">Add Loaction</h4>
+                          <form onSubmit={this.handleSubmit}>
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="mb-6">
+                                  <label
+                                    htmlFor="formrow-name-input"
+                                    className="form-label"
+                                  >
+                                    store Name
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    id="formrow-name-input"
+                                    name="st_name"
+                                    value={st_name}
+                                    onChange={this.handleChange}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="col-md-6">
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="formrow-location-input"
+                                    className="form-label"
+                                  >
+                                    Storeage Location
+                                  </label>
+                                  <select
+                                    id="formrow-inputLocation"
+                                    className="form-select"
+                                    name="st_location"
+                                    value={st_location}
+                                    onChange={this.handleChange}
+                                  >
+                                    <option selected>Choose</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="mb-3">
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="gridCheck"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="gridCheck"
+                                >
+                                  Check me out
+                                </label>
+                              </div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2">
+                              <button
+                                type="submit"
+                                class="btn btn-primary waves-effect waves-light"
+                                value="submit"
+                              >
+                                Submit
+                              </button>
+                              <button
+                                type="reset"
+                                class="btn btn-secondary waves-effect"
+                                data-bs-dismiss="modal"
+                              >
+                                Close
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                        {/* end card body */}
+                      </div>
+                      {/* end card */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* /.modal-content */}
+            </div>
+            {/* /.modal-dialog */}
+          </div>
+        </div>
+
+        {/********************* * end Add modal *************************/}
+
+        {/********************* * update modal *************************/}
         <div>
           <div
             id="edit"
@@ -426,7 +425,8 @@ export default class StoreLocation extends Component {
             {/* /.modal-dialog */}
           </div>
         </div>
-        
+
+        {/******************* * End update modal *********************/}
       </body>
     );
   }

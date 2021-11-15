@@ -19,7 +19,7 @@ export default class Brand extends Component {
   }
 
   componentDidMount = async () => {
-    await axios.get("http://localhost:4000/api/brands").then((response) => {
+    axios.get("http://localhost:4000/api/brands").then((response) => {
       this.setState({
         brands: response.data.data,
       });
@@ -29,7 +29,7 @@ export default class Brand extends Component {
 
   handleChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -47,7 +47,7 @@ export default class Brand extends Component {
     e.preventDefault();
     axios
       .patch("http://localhost:4000/api/brands", this.state)
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         this.componentDidMount();
       });
@@ -73,9 +73,8 @@ export default class Brand extends Component {
   findBrandById = (brand_id) => {
     axios
       .get("http://localhost:4000/api/brands/" + brand_id)
-      .then(response => {
-        if (response.data!= null) {
-          
+      .then((response) => {
+        if (response.data != null) {
           let data = response.data.data;
           console.log(data.brand_id);
           this.setState({
@@ -88,7 +87,6 @@ export default class Brand extends Component {
             brand_addedDate: data.brand_addedDate,
           });
         }
-        
       });
   };
 
@@ -139,216 +137,9 @@ export default class Brand extends Component {
                             </label>
                           </div>
                         </div>
-
-                        <div>
-                          {/* sample modal content */}
-                          <div
-                            id="exampleModalFullscreen"
-                            className="modal fade"
-                            tabIndex={-1}
-                            aria-labelledby="#exampleModalFullscreenLabel"
-                            aria-hidden="true"
-                          >
-                            <div className="modal-dialog ">
-                              <div className="modal-content">
-                                <div className="modal-body">
-                                  <div className="row">
-                                    <div className="col-xl-12">
-                                      <div className="card">
-                                        <div className="card-body">
-                                          <h4 className="card-title mb-4">
-                                            Add Brand
-                                          </h4>
-                                          <form onSubmit={this.handleSubmit}>
-                                            <div className="mb-6">
-                                              <label
-                                                htmlFor="formrow-email-input"
-                                                className="form-label"
-                                              >
-                                                Brand Name
-                                              </label>
-                                              <input
-                                                type="text"
-                                                className="form-control"
-                                                id="formrow-name-input"
-                                                name="brand_name"
-                                                value={brand_name}
-                                                onChange={this.handleChange}
-                                              />
-                                            </div>
-                                            <div className="row">
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-firstname-input"
-                                                    className="form-label"
-                                                  >
-                                                    Availability
-                                                  </label>
-                                                  <select
-                                                    id="formrow-availability"
-                                                    className="form-select"
-                                                    name="brand_isActive"
-                                                    value={brand_isActive}
-                                                    onChange={this.handleChange}
-                                                  >
-                                                    <option selected>
-                                                      Choose
-                                                    </option>
-                                                    <option>pending</option>
-                                                    <option>confirm</option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-password-input"
-                                                    className="form-label"
-                                                  >
-                                                    Brand type
-                                                  </label>
-                                                  <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="formrow-type-input"
-                                                    name="brand_type"
-                                                    value={brand_type}
-                                                    onChange={this.handleChange}
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="row">
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-firstname-input"
-                                                    className="form-label"
-                                                  >
-                                                    Brand Number
-                                                  </label>
-                                                  <select
-                                                    id="formrow-num"
-                                                    className="form-select"
-                                                    name="brand_num"
-                                                    value={brand_num}
-                                                    onChange={this.handleChange}
-                                                  >
-                                                    <option selected>
-                                                      Choose
-                                                    </option>
-                                                    <option>no_1</option>
-                                                    <option>no_2</option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="mb-3">
-                                                  <label
-                                                    htmlFor="formrow-password-input"
-                                                    className="form-label"
-                                                  >
-                                                    Brand Added Date
-                                                  </label>
-                                                  <input
-                                                    type="date"
-                                                    className="form-control"
-                                                    id="formrow-date-input"
-                                                    name="brand_addedDate"
-                                                    value={brand_addedDate}
-                                                    onChange={this.handleChange}
-                                                  />
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="row">
-                                              <div>
-                                                <label
-                                                  htmlFor="formrow-inputZip"
-                                                  className="form-label"
-                                                >
-                                                  Brand Image
-                                                </label>
-
-                                                <div className="text-center mt-6">
-                                                  <form
-                                                    action="#"
-                                                    className="dropzone"
-                                                  >
-                                                    <br></br>
-                                                    <br></br>
-                                                    <br></br>
-                                                    <div className="fallback">
-                                                      <input
-                                                        name="brand_image"
-                                                        type="file"
-                                                        multiple="multiple"
-                                                        value={brand_image}
-                                                        onChange={
-                                                          this.handleChange
-                                                        }
-                                                      />
-                                                    </div>
-                                                    <div className="dz-message needsclick">
-                                                      <div className="mb-3">
-                                                        <i className="display-4 text-muted bx bxs-cloud-upload" />
-                                                      </div>
-                                                      <h5>
-                                                        Drop files here or click
-                                                        to upload.
-                                                      </h5>
-                                                    </div>
-                                                  </form>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="mb-3">
-                                              <div className="form-check">
-                                                <input
-                                                  className="form-check-input"
-                                                  type="checkbox"
-                                                  id="gridCheck"
-                                                />
-                                                <label
-                                                  className="form-check-label"
-                                                  htmlFor="gridCheck"
-                                                >
-                                                  Check me out
-                                                </label>
-                                              </div>
-                                            </div>
-                                            <div class="d-flex flex-wrap gap-2">
-                                              <button
-                                                type="submit"
-                                                class="btn btn-primary waves-effect waves-light"
-                                                value="submit"
-                                              >
-                                                Submit
-                                              </button>
-                                              <button
-                                                type="reset"
-                                                class="btn btn-secondary waves-effect"
-                                                data-bs-dismiss="modal"
-                                              >
-                                                Close
-                                              </button>
-                                            </div>
-                                          </form>
-                                        </div>
-                                        {/* end card body */}
-                                      </div>
-                                      {/* end card */}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              {/* /.modal-content */}
-                            </div>
-                            {/* /.modal-dialog */}
-                          </div>
-                        </div>
                       </div>
+
+                      {/************************ *table view ***********************/}
                       <div className="table-responsive">
                         <table className="table align-middle table-nowrap mb-0">
                           <thead className="table-light">
@@ -405,253 +196,13 @@ export default class Brand extends Component {
                                       data-bs-target="#edit"
                                       class="btn btn-outline-secondary btn-sm edit"
                                       title="Edit"
-                                      onClick={this.findBrandById.bind(this,data.brand_id)}
+                                      onClick={this.findBrandById.bind(
+                                        this,
+                                        data.brand_id
+                                      )}
                                     >
                                       <i class="fas fa-pencil-alt"></i>
                                     </button>
-{/* update modal */}
-                                    <div
-                                      id="edit"
-                                      className="modal fade"
-                                      tabIndex={-1}
-                                      aria-labelledby="#exampleModalFullscreenLabel"
-                                      aria-hidden="true"
-                                    >
-                                      <div className="modal-dialog ">
-                                        <div className="modal-content">
-                                          <div className="modal-body">
-                                            <div className="row">
-                                              <div className="col-xl-12">
-                                                <div className="card">
-                                                  <div className="card-body">
-                                                    <h4 className="card-title mb-4">
-                                                      Edit Brand
-                                                    </h4>
-                                                    <form
-                                                      onSubmit={
-                                                        this.handleUpdate
-                                                      }
-                                                    >
-                                                      
-
-                                                      <div className="mb-6">
-                                                        <label
-                                                          htmlFor="formrow-email-input"
-                                                          className="form-label"
-                                                        >
-                                                          Brand Name
-                                                        </label>
-                                                        <input
-                                                          type="text"
-                                                          className="form-control"
-                                                          id="formrow-name-input"
-                                                          name="brand_name"
-                                                          value={this.state.brand_name}
-                                                          onChange={
-                                                            this.handleChange
-                                                          }
-                                                          
-                                                        />
-                                                      </div>
-                                                      <div className="row">
-                                                        <div className="col-md-6">
-                                                          <div className="mb-3">
-                                                            <label
-                                                              htmlFor="formrow-firstname-input"
-                                                              className="form-label"
-                                                            >
-                                                              Availability
-                                                            </label>
-                                                            <select
-                                                              id="formrow-availability"
-                                                              className="form-select"
-                                                              name="brand_isActive"
-                                                              value={
-                                                                this.state.brand_isActive
-                                                              }
-                                                              onChange={
-                                                                this
-                                                                  .handleChange
-                                                              }
-                                                            >
-                                                              <option value="" >
-                                                                Choose
-                                                              </option>
-                                                              <option value="pending">
-                                                                pending
-                                                              </option>
-                                                              <option value="confirm">
-                                                                confirm
-                                                              </option>
-                                                            </select>
-                                                          </div>
-                                                        </div>
-                                                        <div className="col-md-6">
-                                                          <div className="mb-3">
-                                                            <label
-                                                              htmlFor="formrow-password-input"
-                                                              className="form-label"
-                                                            >
-                                                              Brand type
-                                                            </label>
-                                                            <input
-                                                              type="text"
-                                                              className="form-control"
-                                                              id="formrow-type-input"
-                                                              name="brand_type"
-                                                              value={this.state.brand_type}
-                                                              onChange={
-                                                                this
-                                                                  .handleChange
-                                                              }
-                                                            />
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                      <div className="row">
-                                                        <div className="col-md-6">
-                                                          <div className="mb-3">
-                                                            <label
-                                                              htmlFor="formrow-firstname-input"
-                                                              className="form-label"
-                                                            >
-                                                              Brand Number
-                                                            </label>
-                                                            <select
-                                                              id="formrow-num"
-                                                              className="form-select"
-                                                              name="brand_num"
-                                                              value={this.state.brand_num}
-                                                              onChange={
-                                                                this
-                                                                  .handleChange
-                                                              }
-                                                            >
-                                                              <option >
-                                                                Choose
-                                                              </option>
-                                                              <option value="no_1">
-                                                                no_1
-                                                              </option>
-                                                              <option value="no_2">
-                                                                no_2
-                                                              </option>
-                                                            </select>
-                                                          </div>
-                                                        </div>
-                                                        <div className="col-md-6">
-                                                          <div className="mb-3">
-                                                            <label
-                                                              htmlFor="formrow-password-input"
-                                                              className="form-label"
-                                                            >
-                                                              Brand Added Date
-                                                            </label>
-                                                            <input
-                                                              type="date"
-                                                              className="form-control"
-                                                              id="formrow-date-input"
-                                                              name="brand_addedDate"
-                                                              value={
-                                                                this.state.brand_addedDate
-                                                              }
-                                                              onChange={
-                                                                this
-                                                                  .handleChange
-                                                              }
-                                                            />
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                      <div className="row">
-                                                        <div>
-                                                          <label
-                                                            htmlFor="formrow-inputZip"
-                                                            className="form-label"
-                                                          >
-                                                            Brand Image
-                                                          </label>
-
-                                                          <div className="text-center mt-6">
-                                                            <form
-                                                              action="#"
-                                                              className="dropzone"
-                                                            >
-                                                              <br></br>
-                                                              <br></br>
-                                                              <br></br>
-                                                              <div className="fallback">
-                                                                <input
-                                                                  name="brand_image"
-                                                                  type="file"
-                                                                  multiple="multiple"
-                                                                  value={
-                                                                    this.state.brand_image
-                                                                  }
-                                                                  onChange={
-                                                                    this
-                                                                      .handleChange
-                                                                  }
-                                                                />
-                                                              </div>
-                                                              <div className="dz-message needsclick">
-                                                                <div className="mb-3">
-                                                                  <i className="display-4 text-muted bx bxs-cloud-upload" />
-                                                                </div>
-                                                                <h5>
-                                                                  Drop files
-                                                                  here or click
-                                                                  to upload.
-                                                                </h5>
-                                                              </div>
-                                                            </form>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                      <div className="mb-3">
-                                                        <div className="form-check">
-                                                          <input
-                                                            className="form-check-input"
-                                                            type="checkbox"
-                                                            id="gridCheck"
-                                                          />
-                                                          <label
-                                                            className="form-check-label"
-                                                            htmlFor="gridCheck"
-                                                          >
-                                                            Check me out
-                                                          </label>
-                                                        </div>
-                                                      </div>
-                                                      <div class="d-flex flex-wrap gap-2">
-                                                        <button
-                                                          type="submit"
-                                                          class="btn btn-primary waves-effect waves-light"
-                                                          value="submit"
-                                                        >
-                                                          Update
-                                                        </button>
-                                                        <button
-                                                          type="reset"
-                                                          class="btn btn-secondary waves-effect"
-                                                          data-bs-dismiss="modal"
-                                                        >
-                                                          Close
-                                                        </button>
-                                                      </div>
-                                                    </form>
-                                                  </div>
-                                                  {/* end card body */}
-                                                </div>
-                                                {/* end card */}
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        {/* /.modal-content */}
-                                      </div>
-                                      {/* /.modal-dialog */}
-                                    </div>
 
                                     <button
                                       className="btn btn-outline-secondary btn-sm delete"
@@ -669,15 +220,411 @@ export default class Brand extends Component {
                           </tbody>
                         </table>
                       </div>
-                      {/* end table-responsive */}
+                      {/******************* end table-responsive *******************/}
                     </div>
                   </div>
                 </div>
               </div>
-              {/* end row */}
-              {/* container-fluid */}
-              {/* End Page-content */}
-              {/* Transaction Modal */}
+              
+
+              {/********************* * Add modal *****************************/}
+
+              <div>
+                {/* sample modal content */}
+                <div
+                  id="exampleModalFullscreen"
+                  className="modal fade"
+                  tabIndex={-1}
+                  aria-labelledby="#exampleModalFullscreenLabel"
+                  aria-hidden="true"
+                >
+                  <div className="modal-dialog ">
+                    <div className="modal-content">
+                      <div className="modal-body">
+                        <div className="row">
+                          <div className="col-xl-12">
+                            <div className="card">
+                              <div className="card-body">
+                                <h4 className="card-title mb-4">Add Brand</h4>
+                                <form onSubmit={this.handleSubmit}>
+                                  <div className="mb-6">
+                                    <label
+                                      htmlFor="formrow-email-input"
+                                      className="form-label"
+                                    >
+                                      Brand Name
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      id="formrow-name-input"
+                                      name="brand_name"
+                                      value={brand_name}
+                                      onChange={this.handleChange}
+                                    />
+                                  </div>
+                                  <div className="row">
+                                    <div className="col-md-6">
+                                      <div className="mb-3">
+                                        <label
+                                          htmlFor="formrow-firstname-input"
+                                          className="form-label"
+                                        >
+                                          Availability
+                                        </label>
+                                        <select
+                                          id="formrow-availability"
+                                          className="form-select"
+                                          name="brand_isActive"
+                                          value={brand_isActive}
+                                          onChange={this.handleChange}
+                                        >
+                                          <option selected>Choose</option>
+                                          <option>pending</option>
+                                          <option>confirm</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                      <div className="mb-3">
+                                        <label
+                                          htmlFor="formrow-password-input"
+                                          className="form-label"
+                                        >
+                                          Brand type
+                                        </label>
+                                        <input
+                                          type="text"
+                                          className="form-control"
+                                          id="formrow-type-input"
+                                          name="brand_type"
+                                          value={brand_type}
+                                          onChange={this.handleChange}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="row">
+                                    <div className="col-md-6">
+                                      <div className="mb-3">
+                                        <label
+                                          htmlFor="formrow-firstname-input"
+                                          className="form-label"
+                                        >
+                                          Brand Number
+                                        </label>
+                                        <select
+                                          id="formrow-num"
+                                          className="form-select"
+                                          name="brand_num"
+                                          value={brand_num}
+                                          onChange={this.handleChange}
+                                        >
+                                          <option selected>Choose</option>
+                                          <option>no_1</option>
+                                          <option>no_2</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                      <div className="mb-3">
+                                        <label
+                                          htmlFor="formrow-password-input"
+                                          className="form-label"
+                                        >
+                                          Brand Added Date
+                                        </label>
+                                        <input
+                                          type="date"
+                                          className="form-control"
+                                          id="formrow-date-input"
+                                          name="brand_addedDate"
+                                          value={brand_addedDate}
+                                          onChange={this.handleChange}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="row">
+                                    <div>
+                                      <label
+                                        htmlFor="formrow-inputZip"
+                                        className="form-label"
+                                      >
+                                        Brand Image
+                                      </label>
+
+                                      <div className="text-center mt-6">
+                                        <form action="#" className="dropzone">
+                                          <br></br>
+                                          <br></br>
+                                          <br></br>
+                                          <div className="fallback">
+                                            <input
+                                              name="brand_image"
+                                              type="file"
+                                              multiple="multiple"
+                                              value={brand_image}
+                                              onChange={this.handleChange}
+                                            />
+                                          </div>
+                                          <div className="dz-message needsclick">
+                                            <div className="mb-3">
+                                              <i className="display-4 text-muted bx bxs-cloud-upload" />
+                                            </div>
+                                            <h5>
+                                              Drop files here or click to
+                                              upload.
+                                            </h5>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="mb-3">
+                                    <div className="form-check">
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="gridCheck"
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="gridCheck"
+                                      >
+                                        Check me out
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="d-flex flex-wrap gap-2">
+                                    <button
+                                      type="submit"
+                                      class="btn btn-primary waves-effect waves-light"
+                                      value="submit"
+                                    >
+                                      Submit
+                                    </button>
+                                    <button
+                                      type="reset"
+                                      class="btn btn-secondary waves-effect"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      Close
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                              {/* end card body */}
+                            </div>
+                            {/* end card */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* /.modal-content */}
+                  </div>
+                  {/* /.modal-dialog */}
+                </div>
+              </div>
+
+              {/********************** End Add modal **********************/}
+
+              {/************************** * update modal **********************/}
+              <div
+                id="edit"
+                className="modal fade"
+                tabIndex={-1}
+                aria-labelledby="#exampleModalFullscreenLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog ">
+                  <div className="modal-content">
+                    <div className="modal-body">
+                      <div className="row">
+                        <div className="col-xl-12">
+                          <div className="card">
+                            <div className="card-body">
+                              <h4 className="card-title mb-4">Edit Brand</h4>
+                              <form onSubmit={this.handleUpdate}>
+                                <div className="mb-6">
+                                  <label
+                                    htmlFor="formrow-email-input"
+                                    className="form-label"
+                                  >
+                                    Brand Name
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    id="formrow-name-input"
+                                    name="brand_name"
+                                    value={this.state.brand_name}
+                                    onChange={this.handleChange}
+                                  />
+                                </div>
+                                <div className="row">
+                                  <div className="col-md-6">
+                                    <div className="mb-3">
+                                      <label
+                                        htmlFor="formrow-firstname-input"
+                                        className="form-label"
+                                      >
+                                        Availability
+                                      </label>
+                                      <select
+                                        id="formrow-availability"
+                                        className="form-select"
+                                        name="brand_isActive"
+                                        value={this.state.brand_isActive}
+                                        onChange={this.handleChange}
+                                      >
+                                        <option value="">Choose</option>
+                                        <option value="pending">pending</option>
+                                        <option value="confirm">confirm</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-6">
+                                    <div className="mb-3">
+                                      <label
+                                        htmlFor="formrow-password-input"
+                                        className="form-label"
+                                      >
+                                        Brand type
+                                      </label>
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        id="formrow-type-input"
+                                        name="brand_type"
+                                        value={this.state.brand_type}
+                                        onChange={this.handleChange}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="row">
+                                  <div className="col-md-6">
+                                    <div className="mb-3">
+                                      <label
+                                        htmlFor="formrow-firstname-input"
+                                        className="form-label"
+                                      >
+                                        Brand Number
+                                      </label>
+                                      <select
+                                        id="formrow-num"
+                                        className="form-select"
+                                        name="brand_num"
+                                        value={this.state.brand_num}
+                                        onChange={this.handleChange}
+                                      >
+                                        <option>Choose</option>
+                                        <option value="no_1">no_1</option>
+                                        <option value="no_2">no_2</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-6">
+                                    <div className="mb-3">
+                                      <label
+                                        htmlFor="formrow-password-input"
+                                        className="form-label"
+                                      >
+                                        Brand Added Date
+                                      </label>
+                                      <input
+                                        type="date"
+                                        className="form-control"
+                                        id="formrow-date-input"
+                                        name="brand_addedDate"
+                                        value={this.state.brand_addedDate}
+                                        onChange={this.handleChange}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="row">
+                                  <div>
+                                    <label
+                                      htmlFor="formrow-inputZip"
+                                      className="form-label"
+                                    >
+                                      Brand Image
+                                    </label>
+
+                                    <div className="text-center mt-6">
+                                      <form action="#" className="dropzone">
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <div className="fallback">
+                                          <input
+                                            name="brand_image"
+                                            type="file"
+                                            multiple="multiple"
+                                            value={this.state.brand_image}
+                                            onChange={this.handleChange}
+                                          />
+                                        </div>
+                                        <div className="dz-message needsclick">
+                                          <div className="mb-3">
+                                            <i className="display-4 text-muted bx bxs-cloud-upload" />
+                                          </div>
+                                          <h5>
+                                            Drop files here or click to upload.
+                                          </h5>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="mb-3">
+                                  <div className="form-check">
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      id="gridCheck"
+                                    />
+                                    <label
+                                      className="form-check-label"
+                                      htmlFor="gridCheck"
+                                    >
+                                      Check me out
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                  <button
+                                    type="submit"
+                                    class="btn btn-primary waves-effect waves-light"
+                                    value="submit"
+                                  >
+                                    Update
+                                  </button>
+                                  <button
+                                    type="reset"
+                                    class="btn btn-secondary waves-effect"
+                                    data-bs-dismiss="modal"
+                                  >
+                                    Close
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                            {/* end card body */}
+                          </div>
+                          {/* end card */}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* /.modal-content */}
+                </div>
+                {/* /.modal-dialog */}
+              </div>
+
+              {/******************* * End Update modal ***************/}
             </div>
           </div>
         </div>
