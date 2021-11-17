@@ -39,7 +39,7 @@ module.exports = {
       `SELECT p_id, p_name,	pvar_name,	brand_name,	cat_name,	punit_name,	p_barcode,	p_qty,	p_unit_qty,	p_buyingPrice,	p_sellingPrice,	p_unitPrice,	p_unitValue,	p_image,	p_isActive,	p_addedDate 
       FROM products,brand,category,product_variations,product_unit 
       WHERE brand.brand_id = products.p_brand_id AND category.cat_id = products.p_cat_id AND product_variations.pvar_id = products.p_pvar_id AND  
-        product_unit.punit_id = products.p_punit_id `,
+        product_unit.punit_id = products.p_punit_id AND p_isActive= 1`,
       [],
       (error, results) => {
         if (error) {
@@ -95,7 +95,7 @@ module.exports = {
   },
   deleteProduct: (p_id, callback) => {
     pool.query(
-      `delete from products where p_id = ?`,
+      `update  products set p_isActive='0' where p_id = ? `,
       [p_id],
       (error, results, fields) => {
         if (error) {

@@ -265,7 +265,7 @@ export default class ProductList extends Component {
                                     <td>{data.brand_name}</td>
                                     <td>{data.cat_name}</td>
                                     <td>{data.punit_name}</td>
-                                    <td></td>
+                                    <td>{data.p_isActive}</td>
                                     <td>{data.pvar_name}</td>
                                     <td>{data.p_addedDate}</td>
                                     <td>
@@ -716,14 +716,17 @@ export default class ProductList extends Component {
                                     >
                                       isActive
                                     </label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      id="formrow-inputZip"
+                                    <select
+                                      id="formrow-inputState"
+                                      className="form-select"
                                       name="p_isActive"
                                       value={p_isActive}
                                       onChange={this.handleChange}
-                                    />
+                                    >
+                                      <option selected>Choose...</option>
+                                      <option>1</option>
+                                      <option>0</option>
+                                    </select>
                                   </div>
                                 </div>
                                 <div className="col-lg-4">
@@ -1134,14 +1137,17 @@ export default class ProductList extends Component {
                                   >
                                     isActive
                                   </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    id="formrow-inputZip"
+                                  <select
+                                    id="formrow-inputState"
+                                    className="form-select"
                                     name="p_isActive"
                                     value={this.state.p_isActive}
                                     onChange={this.handleChange}
-                                  />
+                                  >
+                                    <option selected>Choose...</option>
+                                    <option>1</option>
+                                    <option>0</option>
+                                  </select>
                                 </div>
                               </div>
                               <div className="col-lg-4">
